@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<style>
+	#tooltip{ width:170px; height:17px; line-height:17px; text-align:center; font-size:15px; position:absolute; border:1px solid #000; background:#ccc;}
+</style>
+
+<script src="jquery-2.1.4.js" type="text/javascript"></script>
+<script>
+	$( document).ready(function(e) {
+		var x = 10;
+		var y = 20;
+        $("a.tooltip").mouseover(function(e) {
+			this.myTitle = this.title;
+			this.title = "";		//让自带的超链接提示消失
+            var tooltip = "<div id='tooltip'>" + this.myTitle + "</div>";		//每次鼠标悬停时，动态创建一个<div>。并且把提示内容放入自制的超链接提示框内
+			$("body").append(tooltip);		//把tooltip动态加入到body中
+			$("#tooltip").css({"left": (e.pageX+x) + "px","top": (e.pageY+y) + "px"}).show("fast");		//让自制的提示框离开鼠标小手一定距离，并且显示出来
+        }).mouseout(function(e) {
+			this.title = this.myTitle;		//为了下次鼠标悬停时，仍可取消自带提示框，所以这里必须把自己创建的提示框内容归还
+            $("#tooltip").remove();		//当鼠标离开，提示框也离开
+        }).mousemove(function(e) {
+			$("#tooltip").css({"left": (e.pageX+x) + "px","top": (e.pageY+y) + "px"}).show("fast");		//为了让鼠标在超链接上移动时，提示框也可以相应移动
+        });
+    });
+</script>
+
+</head>
+<body>
+
+<p><a href="#" class="tooltip" title="这是自制超链接提示1.">提示1</a></p>
+<p><a href="#" class="tooltip" title="这是自制超链接提示2.">提示2</a></p>
+<p><a href="#" title="这是自带提示1.">自带提示1</a></p>
+<p><a href="#" title="这是自带提示2.">自带提示1</a></p>
+
+</body>
+</html>
