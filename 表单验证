@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<style>
+	.high,.onError{ color:red;}
+	.onSuccess{ color:#090;}
+</style>
+
+<script src="jquery-2.1.4.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function(e) {
+        $("form :input.required").each(function(index, element) {
+            var $required = $("<strong class='high'>*</strong>");
+			$(this).parent().append($required);
+        });		//给必填文本框信息添加红色的“*”，让用户知道那些东西是必填项
+		$("form :input").blur(function(e) {
+            var $parent = $(this).parent();
+			$parent.find(".tips").remove();		//消除前面一次输入时，产生的提示，防止每次输入后，留下不同提示，而留下很多提示
+			var okMsg = "输入正确。";
+			if( $(this).is("#username") ){
+				if( this.value =="" || this.value.length<6 ){
+					var errorMsg = "请输入至少6位的用户名。";	
+					$parent.append("<span class='tips onError'>" + errorMsg + "</span>");
+				} else {
+					//var okMsg = "输入正确。";	
+					$parent.append("<span class='tips onSuccess'>" + okMsg + "</span>");
+				}
+			}
+			if( $(this).is("#email") ){
+				if( this.value == "" || (this.value!="" && !/.+@.+\.[a-zA-Z]{2,4}$/.test(this.value))){		//验证输入的文本信息是否符合邮箱名称的规范
+					var errorMsg = "请输入正确的E-Mail地址。";	
+					$parent.append("<span class='tips onError'>" + errorMsg + "</span>");
+				} else {
+					//var okMsg = "输入正确。";
+					$parent.append("<span class='tips onSuccess'>" + okMsg + "</span>");
+				}
+			}
+        }).keyup(function(e) {
+           $(this).triggerHandler("blur"); 		//让文本框每次输入一个字符后，都询问一遍是否输入的内容是否符合要求
+        }).focus(function(e) {
+            $(this).triggerHandler("blur");
+        });		//让文本框一被选中时，就出现提示语句，方便用户注册
+		$("#send").click(function(e) {
+            $("form .required:input").trigger("blur");
+			var numError = $("form .onError").length;
+			if(numError){
+				return false;
+			}
+			alert("注册成功，密码已发到你的邮箱，请查收。");
+        });
+    });
+</script>
+
+</head>
+<body>
+
+<form method="post" action="">
+	<div class="int">
+    	<label for="username">用户名：</label>
+        <input type="text" id="username" class="required"/>
+    </div>
+    <div class="int">
+    	<label for="email">邮箱：</label>
+        <input type="text" id="email" class="required"/>
+    </div>
+    <div class="int">
+    	<label for="personinfo">个人资料：</label>
+        <input type="text" id="personinfo"/>
+    </div>
+    <div class="sub">
+    	<input type="submit" value="提交" id="send"/>
+        <input type="reset" id="res"/>
+    </div>
+</form>
+
+</body>
+</html>
