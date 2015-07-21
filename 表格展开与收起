@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
+<style>
+	body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-family:"楷体";}
+	li{ list-style:none;}
+	em{ font-style:normal;}
+	a{ text-decoration:none;}
+	table{ border-collapse:collapse;}
+	img{ border:0; vertical-align:top;}
+	textarea{ resize:none; overflow:auto;}
+	/* CSS重置 */
+	
+	thead th{ font-size:19px; font-weight:bold; border-bottom:2px solid #999; height:29px; line-height:29px;}
+	tbody th{ font-size:15px; font-weight:normal;}
+	table{ width:400px; border:5px solid #666;}
+	.parent{ width:400px; background:#ACACAC; font-size:17px; height:23px; line-height:23px; cursor:pointer;}
+	.selected{ background:#ccc;}
+</style>
+
+<script src="jquery-2.1.4.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function(e) {
+        $("tr.parent").click(function(e) {
+            $(this).toggleClass("selected")
+				.siblings(".child" + this.id).toggle();
+        }).click();
+    });
+</script>
+
+</head>
+<body>
+
+<table>
+	<thead>
+    	<tr><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+    </thead>
+    <tbody>
+    	<tr class="parent" id="Row1"><td colspan="3">前台设计组</td></tr>
+    	<tr class="childRow1"><th>张三</th><th>男</th><th>浙江宁波</th></tr>
+    	<tr class="childRow1"><th>李四</th><th>女</th><th>浙江杭州</th></tr>
+        
+        <tr class="parent" id="Row2"><td colspan="3">前台开发组</td></tr>
+    	<tr class="childRow2"><th>王五</th><th>男</th><th>湖南长沙</th></tr>
+    	<tr class="childRow2"><th>赵六</th><th>男</th><th>浙江温州</th></tr>
+        
+        <tr class="parent" id="Row3"><td colspan="3">后台开发组</td></tr>
+    	<tr class="childRow3"><th>Rain</th><th>男</th><th>浙江杭州</th></tr>
+    	<tr class="childRow3"><th>MaxMan</th><th>女</th><th>浙江杭州</th></tr>
+    </tbody>
+</table>
+
+</body>
+</html>
