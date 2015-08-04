@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用this进行应用浮层介绍</title>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin: 0; padding: 0; font-size: 12px;}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        /* CSS重置 */
+
+        ul{ width:690px; height:440px; float:left; margin:100px 325px;}
+        ul li{ float:left; width:172px; height:220px; position:relative; margin-right:0; cursor:pointer;}
+        img{ width:172px; height:220px; position:absolute;}
+        div img{ display:none; position:absolute; top:-100px; left:0; width:242px; height:149px; z-index:1;}
+    </style>
+
+    <script>
+        window.onload = function(){
+            var aLi = document.getElementsByTagName("li");
+            var len = aLi.length;
+
+            for( var i=0; i<len; i++){
+                aLi[i].onmouseover = function(){
+                    var oDiv = this.getElementsByTagName("div")[0];
+                    oDiv.getElementsByTagName("img")[0].style.display = "block";
+                };
+                aLi[i].onmouseout = function(){
+                    var oDiv = this.getElementsByTagName("div")[0];
+                    oDiv.getElementsByTagName("img")[0].style.display = "none";
+                };
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<ul>
+    <li>
+        <img src="Img/看比赛.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/内涵段子.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/有妖气漫画.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/大众点评.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/时空猎人.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/全民斗西游.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/神魔2.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+    <li>
+        <img src="Img/傲视西游.jpg"/>
+        <div><img src="Img/浮层背景.png"/></div>
+    </li>
+</ul>
+
+</body>
+</html>
