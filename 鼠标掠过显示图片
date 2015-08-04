@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标掠过显示图像</title>
+
+    <style>
+        .pic{ background: url("img/pic.jpg") no-repeat; width:500px; height:500px; position:relative;}
+        .pic div{
+            width: 50px;
+            height: 50px;
+            background: #f1f1f1;
+            position: absolute;
+            border: 1px solid #f1f1f1;
+            }
+    </style>
+
+    <script>
+        window.onload = function (){
+            var oDiv = document.getElementById("pic");
+            var aDiv = oDiv.getElementsByTagName("div");
+            var str = "";
+
+            for( var i=0; i<100; i++){
+                str += "<div></div>";
+            }
+            oDiv.innerHTML = str;
+
+            var len = aDiv.length;
+            for(var i=0; i<len; i++){
+                if( i%10 == 0 ){
+                    for(var j=0; j<10; j++, i++){
+                        aDiv[i].style.top = Math.floor(i/10)*50 + "px";
+                    }
+                    i -= 10;
+                    for(var j = 0; j<10; j++, i++){
+                        aDiv[i].style.left = + j*50 + "px";
+                    }
+                    i -= 10;
+                }
+            }
+
+            for( var i=0; i<len; i++){
+                aDiv[i].onmouseover = function(){
+                    this.style.background = "none";
+                };
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<p>请用鼠标刮开下图！</p>
+<div class="pic" id="pic"></div>
+
+</body>
+</html>
