@@ -168,7 +168,6 @@
                     var oPointPlus = this.getElementsByTagName("img")[1];
                     oPointPlus.className = "";
                     oPointPlus.src = "";
-
                     oNum.innerHTML = this.index+1 + "/" + len;
                     oPic.src = aSrc[ this.index ];
                     oInfo.innerHTML = aInfo[ this.index ];
