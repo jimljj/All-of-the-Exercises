@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数重用计算价格</title>
+
+    <script>
+        window.onload = function () {
+            var oList = document.getElementById("list");
+            var aLi = oList.getElementsByTagName("li");
+
+            var oTotal = document.getElementById("total");
+            var oItems = oTotal.getElementsByTagName("strong")[0];
+            var oCost = oTotal.getElementsByTagName("span")[0];
+            var cost = 0;
+
+            var oUnitPrice = oTotal.getElementsByTagName("em")[0];      //最贵的商品单价
+
+            function maxPrice(){
+                var itemsPrice = [];
+                for( var i = 0 ; i < aLi.length; i++){
+                    var iStrong = aLi[i].getElementsByTagName("strong")[0];
+                    var iEm = aLi[i].getElementsByTagName("em")[0];
+                    var count = Number( iStrong.innerHTML );       //获取i商品的数量
+                    var iPrice = parseFloat( iEm.innerHTML );       //获取i商品的单价
+
+                    if( count != 0 ){
+                        itemsPrice.push( iPrice );
+                    }
+                }
+                var max = itemsPrice[0];
+                for( var j = 1; j < itemsPrice.length; j++){
+                    if( itemsPrice[j] > max ){
+                        max = itemsPrice[j];
+                    }
+                }
+                if ( max == undefined){
+                    oUnitPrice.innerHTML = 0;
+                } else {
+                    oUnitPrice.innerHTML = max;     //显示最贵商品
+                }
+
+            }
+
+            function countLi(oLi) {
+                var aInput = oLi.getElementsByTagName("input");
+                var oStrong = oLi.getElementsByTagName("strong")[0];
+                var oEm = oLi.getElementsByTagName("em")[0];
+                var oSpan = oLi.getElementsByTagName("span")[0];
+
+                var num = Number(oStrong.innerHTML);  //注意innerHTML获得的数据都是字符串
+                var unitPrice = parseFloat(oEm.innerHTML);
+
+                aInput[0].onclick = function () {
+                    num--;  //或者是num -= 1; --、++存在隐式类型转换
+                    if (num == -1) {
+                        num = 0;
+                        alert("对不起，本商店概不回收商品！");
+                        return;
+                    }
+                    oStrong.innerHTML = num;
+                    oSpan.innerHTML = num*unitPrice + "元";
+
+                    oItems.innerHTML--;
+                    cost -= unitPrice;
+                    oCost.innerHTML = cost;
+
+                    maxPrice();
+                };
+                aInput[1].onclick = function () {
+                    num++;  //或者是num += 1;
+                    oStrong.innerHTML = num;
+                    oSpan.innerHTML = num*unitPrice + "元";
+
+                    oItems.innerHTML++;     //商品合计件数累加
+                    cost += unitPrice;
+                    oCost.innerHTML = cost;     //总消费额累加
+
+                    maxPrice();
+                };
+            }
+
+            for (var i = 0; i < aLi.length; i++) {
+                countLi(aLi[i]);
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<ul id="list">
+    <li>
+        <input type="button" value="-"/>
+        <strong>0</strong>
+        <input type="button" value="+"/>
+        单价：<em>12.5元</em>     <!-- 其实可以把“元”放在标签的外面，这样在写JS时会方便一点 -->
+        小计：<span>0元</span>
+    </li>
+    <li>
+        <input type="button" value="-"/>
+        <strong>0</strong>
+        <input type="button" value="+"/>
+        单价：<em>10.5元</em>
+        小计：<span>0元</span>
+    </li>
+    <li>
+        <input type="button" value="-"/>
+        <strong>0</strong>
+        <input type="button" value="+"/>
+        单价：<em>8.5元</em>
+        小计：<span>0元</span>
+    </li>
+    <li>
+        <input type="button" value="-"/>
+        <strong>0</strong>
+        <input type="button" value="+"/>
+        单价：<em>8元</em>
+        小计：<span>0元</span>
+    </li>
+    <li>
+        <input type="button" value="-"/>
+        <strong>0</strong>
+        <input type="button" value="+"/>
+        单价：<em>14.5元</em>
+        小计：<span>0元</span>
+    </li>
+</ul>
+
+<p id="total">
+    商品合计件数：<strong>0</strong>   件     <br/>
+    共花费：<span>0</span>  元     <br/>
+    其中最贵的商品单价：<em>0</em>    元
+</p>
+
+</body>
+</html>
