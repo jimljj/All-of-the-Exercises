@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜狐视频列表</title>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:15px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        .wrap{
+            width: 268px;
+            height: 396px;
+            background: #dee7e7;
+            margin: auto;
+            position: relative;
+        }
+        .wrap span{
+            color: #103142;
+            font-size: 18px;
+            position: absolute;
+            left: 19px;
+            top: 10px;
+            font-weight: bold;
+        }
+        .wrap .classify{
+            position: absolute;
+            left: 152px;
+            top: 12px;
+        }
+        .wrap .classify li{
+            display: block;
+            width: 35px;
+            height: 24px;
+            border: 1px solid #94bdd6;
+            background: #dee7e7;
+            font-size: 15px;
+            text-align: center;
+            line-height: 24px;
+            color: #185273;
+            float: left;
+            cursor: pointer;
+        }
+        .wrap .main{
+            width: 268px;
+            height: 358px;
+            position: absolute;
+            top: 38px;
+        }
+        .wrap .main li{
+            height: 27px;
+            border-bottom: 1px dashed #ffffff;
+            color: #393131;
+            line-height: 27px;
+            text-align: center;
+            cursor: pointer;
+            width: 250px;
+            margin: auto;
+            position: absolute;
+            left: 6px;
+        }
+        .wrap .main .disappear{
+            display: none;
+        }
+        .wrap .main .appear{
+            display: block;
+        }
+        .wrap .classify li.active{
+            background: #ffffff;
+            border-bottom: 0;
+        }
+        .wrap .main div{
+            display: none;
+        }
+        .wrap .main .activeLi img{
+            position: absolute;
+            left: 20px;
+            top: 8px;
+            width: 84px;
+            height: 64px;
+            border: 1px solid #94bdd6;
+        }
+        .wrap .main .activeLi span{
+            position: absolute;
+            left: 110px;
+            height: 14px;
+            font-size: 14px;
+            color: #185273;
+        }
+        .wrap .main .activeLi input{
+            position: absolute;
+            left: 200px;
+            top: 52px;
+            background: #29739c;
+            color: #ffffff;
+            width: 36px;
+            height: 21px;
+            text-align: center;
+            line-height: 21px;
+            font-size: 14px;
+            border: 0;
+        }
+        .wrap .main li.disappearLi{
+            display: none;
+        }
+        .wrap .main .activeLi{
+            height: 80px;
+            background: #ffffff;
+            width: 250px;
+            margin: auto;
+            position: absolute;
+            left: 6px;
+            display: block;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oClassify = document.getElementById("classify");
+            var aClaLi = oClassify.getElementsByTagName("li");
+            var ClaLiNum = aClaLi.length;
+
+            var oMain = document.getElementById("main");
+            var aMainUl = oMain.getElementsByTagName("ul");
+            var MainUlNum = aMainUl.length;
+            var oActiveLi = document.getElementById("activeLi");
+            var oImg = oActiveLi.getElementsByTagName("img")[0];
+
+            var ImgUrl = ["img/1.png","img/2.png","img/3.png","img/4.png","img/5.jpg","img/6.jpg","img/7.jpg"];
+
+            function AppearLi(oUl){       //实现鼠标掠过li时，每条li——新闻多样化展示
+                var aLi = oUl.getElementsByTagName("li");
+                var LiNum = aLi.length;
+                for(var i=0; i<LiNum; i++){
+                    aLi[i].className = "";      //让子级的li的样式全部回归原来的样子
+                    aLi[i].style.top = 28*i + "px";     //先让li成列表显示
+                    aLi[i].LiCount = i;
+                    aLi[i].onmouseover = function () {
+                        for(var j=0; j<LiNum; j++){     //让鼠标掠过的li消失
+                            aLi[j].className = " ";
+                        }
+                        this.className = "disappearLi";
+
+                        oActiveLi.className = "activeLi";       //显示该条消失的li的多样化展示
+                        oActiveLi.style.top = 28*this.LiCount + "px";       //定位多样化展示的位置
+                        for(var j=this.LiCount-1; j>-1; j--){       //让原先鼠标掠过的li归位
+                            aLi[j].style.top = 28*j + "px";
+                        }
+                        for(var j=this.LiCount+1; j<LiNum; j++){        //让鼠标掠过的li后面的li定位
+                            aLi[j].style.top = 28*j+52 + "px";
+                        }
+
+                        oImg.src = ImgUrl[ this.LiCount ];          //多样化展示该条li
+                    }
+                }
+            }
+
+            //初始化
+            aClaLi[0].className = "active";
+            aMainUl[0].className = "appear";
+            AppearLi(aMainUl[0]);
+
+            for(var i=0; i<ClaLiNum; i++){
+                aClaLi[i].index = i;
+                aClaLi[i].onclick = function () {
+                    for(var j=0; j<ClaLiNum; j++){      //给分类项绑定样式
+                        aClaLi[j].className = "";
+                    }
+                    this.className = "active";
+
+                    for(var j=0; j<MainUlNum; j++){     //显示分类下的子选项——新闻
+                        aMainUl[j].className = "disappear";
+                    }
+                    aMainUl[this.index].className = "appear";
+
+                    oActiveLi.className = "";
+
+                    AppearLi(aMainUl[this.index]);
+                }
+            }
+        };
+    </script>
+
+</head>
+<body>
+
+<div class="wrap">
+    <span>观看排行榜</span>
+    <div class="classify" id="classify">
+        <ul>
+            <li>每日</li>
+            <li>每周</li>
+            <li>全部</li>
+        </ul>
+    </div>
+    <div class="main" id="main">
+        <div id="activeLi">
+            <img/>
+            <span>展现普通人的曲折命运和动人故事……</span>
+            <input type="button" value="播放"/>
+        </div>
+        <ul class="disappear">
+            <li>解密：关于地球与人类的一千零一问0</li>
+            <li>解密：关于地球与人类的一千零一问1</li>
+            <li>解密：关于地球与人类的一千零一问2</li>
+            <li>解密：关于地球与人类的一千零一问3</li>
+            <li>解密：关于地球与人类的一千零一问4</li>
+            <li>解密：关于地球与人类的一千零一问5</li>
+        </ul>
+        <ul class="disappear">
+            <li>经典传奇：探索全世界重大历史事件0</li>
+            <li>经典传奇：探索全世界重大历史事件1</li>
+            <li>经典传奇：探索全世界重大历史事件2</li>
+            <li>经典传奇：探索全世界重大历史事件3</li>
+            <li>经典传奇：探索全世界重大历史事件4</li>
+            <li>经典传奇：探索全世界重大历史事件5</li>
+            <li>经典传奇：探索全世界重大历史事件6</li>
+        </ul>
+        <ul class="disappear">
+            <li>0眼界：实现普通人的曲折命运和……</li>
+            <li>1眼界：实现普通人的曲折命运和……</li>
+            <li>2眼界：实现普通人的曲折命运和……</li>
+            <li>3眼界：实现普通人的曲折命运和……</li>
+            <li>4眼界：实现普通人的曲折命运和……</li>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+</html>
