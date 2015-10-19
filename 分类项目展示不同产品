@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡里套选项卡</title>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:15px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        .warp{
+            width: 800px;
+            height: 500px;
+            margin: auto;
+            position: relative;
+        }
+        .first li{
+            display: block;
+            width: 100px;
+            border: 1px solid #c6c6c6;
+            background: #e7e7e7;
+            text-align: center;
+            font-size: 28px;
+            position: absolute;
+            left: 0;
+            cursor: pointer;
+        }
+        .main,.main img{
+            width: 698px;
+            height: 500px;
+            position: absolute;
+            right: 0;
+        }
+        .second{
+            display: none;
+        }
+        .main ul.activeSec{
+            display: inline;
+        }
+        .activeSec li{
+            height: 30px;
+            line-height: 30px;
+            background: #000000;
+            opacity: 0.9;
+            color: #ffffff;
+            text-align: center;
+            border-right: 1px solid #ffffff;
+            cursor: pointer;
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+        }
+        .first li.activeFir{
+            background: #ffffff;
+        }
+        .main .activeSec .activeSecLi{
+            background: #ef3163;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oFirst = document.getElementById("first");
+            var aFirstLi = oFirst.getElementsByTagName("li");
+            var FirstNum = aFirstLi.length;
+
+            var oMain = document.getElementById("main");
+            var aSecondUl = oMain.getElementsByTagName("ul");
+            var SecondNum = aSecondUl.length;
+            var oImg = oMain.getElementsByTagName("img")[0];
+
+            var arrUrl0 = ["img/5.jpg","img/bg.jpg","img/6.jpg"];
+            var arrUrl = [["img/5.jpg","img/bg.jpg","img/6.jpg"],["img/bg.jpg","img/6.jpg","img/7.jpg","img/5.jpg"],["img/6.jpg","img/bg.jpg","img/7.jpg"],["img/7.jpg","img/bg.jpg"]];
+
+            function MouseOverLi(aLi,num,arrUrl){
+                for(var i=0; i<num; i++){
+                    aLi[i].picNum = i;
+                    aLi[i].onmouseover = function () {
+                        for(var j=0; j<num; j++){       //给第二级选项卡绑定onmouseover样式
+                            aLi[j].className = "";
+                        }
+                        this.className = "activeSecLi";
+
+                        oImg.src = arrUrl[ this.picNum ];     //给第二级选项卡绑定图片路径
+                    }
+                }
+            }
+
+            //初始化
+            aFirstLi[0].className = "activeFir";
+            aSecondUl[0].className = "activeSec";
+            var aSecond1Li = aSecondUl[0].getElementsByTagName("li");
+            var Second1LiNum = aSecond1Li.length;
+            aSecond1Li[0].className = "activeSecLi";
+            MouseOverLi(aSecond1Li,Second1LiNum,arrUrl0);      //初始化首次显示的组图的里面的Li的动作
+
+            for(var i=0; i<FirstNum; i++){       //为第一级别的选项卡设定样式
+                aFirstLi[i].style.height = (500/FirstNum)-2 + "px";
+                aFirstLi[i].style.lineHeight = (500/FirstNum)-2 + "px";
+                aFirstLi[i].style.top = (500/FirstNum)*i + "px";
+            }
+
+            for(var j=0; j<SecondNum; j++){     //为第二级别的选项卡设定样式
+                var aLi = aSecondUl[j].getElementsByTagName("li");
+                var LiNum = aLi.length;
+                for(var k=0; k<LiNum; k++){
+                    aLi[k].style.width = (698-LiNum)/LiNum + "px";
+                    aLi[k].style.left = (698/LiNum)*k + "px";
+                }
+            }
+
+            for(var i=0; i<FirstNum; i++){
+                aFirstLi[i].index = i;
+                aFirstLi[i].onmouseover = function () {
+                    for(var j=0; j<FirstNum; j++){       //给第一级选项卡鼠标滑过设定样式
+                        aFirstLi[j].className = " ";
+                    }
+                    this.className = "activeFir";
+
+                    for(var j=0; j<SecondNum; j++){    //显示第二级选项卡
+                        aSecondUl[j].className = "second";
+                    }
+                    aSecondUl[ this.index ].className = "activeSec";
+
+                    var aSecondLi = aSecondUl[ this.index].getElementsByTagName("li");     //给第二级选项卡设定初始化样式
+                    var SecondLiNum = aSecondLi.length;
+                    for(var j=0; j<SecondLiNum; j++){
+                        aSecondLi[j].className = "";
+                    }
+                    aSecondLi[0].className = "activeSecLi";
+
+                    //var aUrl = "arrUrl" + this.index;     //字符串连接后还是字符串，并不能当做数组的名字
+                    var aUrl = arrUrl[ this.index ];
+                    oImg.src = aUrl[0];     //绑定每个组图第一张要显示的图
+
+                    MouseOverLi(aSecondLi,SecondLiNum,aUrl);
+                }
+            }
+        };
+    </script>
+
+</head>
+<body>
+
+<div class="warp">
+    <ul class="first" id="first">
+        <li>组图一</li>
+        <li>组图二</li>
+        <li>组图三</li>
+        <li>组图四</li>
+    </ul>
+    <div class="main" id="main">
+        <img src="img/5.jpg"/>
+        <ul class="second">
+            <li>雪见发呆的眼神</li>
+            <li>风光旖旎的现代异域</li>
+            <li>望着相机的文艺女</li>
+        </ul>
+        <ul class="second">
+            <li>风光旖旎的现代异域</li>
+            <li>望着相机的文艺女</li>
+            <li>深陷沼泽的小象</li>
+            <li>雪见发呆的眼神</li>
+        </ul>
+        <ul class="second">
+            <li>望着相机的文艺女</li>
+            <li>风光旖旎的现代异域</li>
+            <li>深陷沼泽的小象</li>
+        </ul>
+        <ul class="second">
+            <li>深陷沼泽的小象</li>
+            <li>风光旖旎的现代异域</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
