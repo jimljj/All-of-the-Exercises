@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改群组文本框内的值</title>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:15px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        .title{
+            background: #6ba542;
+            display: block;
+            color: #ffffff;
+            height: 40px;
+            font-size: 32px;
+            padding-left: 10px;
+        }
+        .topic{
+            border: 1px solid #666666;
+            height: 300px;
+            overflow: auto;
+            background: #f7f7f7;
+        }
+        .topic li{
+            border-bottom: 1px solid #bddede;
+            display: block;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 0 0 20px;
+        }
+        .topic input,.topic a{
+            display: none;
+        }
+        .topic input{
+            width: 300px;
+        }
+        .topic a{
+            cursor: pointer;
+        }
+        .topic img{
+            height: 18px;
+            width: 18px;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oUl = document.getElementById("topic");
+            var aLi = oUl.getElementsByTagName("li");
+
+            function alter(oli){
+                var oEm= oli.getElementsByTagName("em")[0];
+                var oInput= oli.getElementsByTagName("input")[0];
+                var oImg= oli.getElementsByTagName("img")[0];
+                var aA= oli.getElementsByTagName("a");
+
+                function Display(){
+                    oEm.style.display = "inline";
+                    oImg.style.display = "inline-block";
+                    oInput.style.display = "none";
+                    aA[0].style.display = "none";
+                    aA[1].style.display = "none";
+                }
+
+                oImg.onclick = function () {
+                    oEm.style.display = "none";
+                    oImg.style.display = "none";
+                    oInput.style.display = "inline";
+                    aA[0].style.display = "inline";
+                    aA[1].style.display = "inline";
+                };
+
+                aA[0].onclick = function () {
+                    oEm.innerHTML = oInput.value;
+                    Display();
+                };
+
+                aA[1].onclick = function () {
+                    Display();
+                };
+            }
+
+            for( var i=0; i<aLi.length; i++){
+                alter(aLi[i]);
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<span class="title">新闻（News）</span>
+<ul class="topic" id="topic">
+    <li>
+        <em>新出的iPhone6s竟有24种器材搭配！</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>穆勒坦言英超工资太诱人,曼联引进二娃不再是梦?</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>巴萨12战21球成梦三最差,六大症结不除恐酿大患</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>专车行业大势已定,吐槽不如向前看~</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+    <li>
+        <em>BAT线下战争：为何只是看似咄咄逼人</em>
+        <input type="text"/>
+        <img src="img/pencil.png"/>
+        <a>保存</a>
+        <a>取消</a>
+    </li>
+</ul>
+
+</body>
+</html>

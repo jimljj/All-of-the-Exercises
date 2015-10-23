@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度音乐选择器</title>
+
+    <script>
+        window.onload = function () {
+            var oCheckAll = document.getElementById("checkAll");
+            var oUl = document.getElementsByTagName("ul")[0];
+            var aCheckBox = oUl.getElementsByTagName("input");
+            var aLi = document.getElementsByTagName("li");
+            var LiLen = aLi.length;
+
+            function Color(oLi){
+                oLi.style.background = oLi.index%2===0 ? "#f7ffff" : "#ffffff" ;
+            }
+
+            function Grey(oLi){
+                oLi.style.background = "#efefef";
+            }
+
+            function Select(a,b,way){
+                oInputAll.checked = a;
+                for(var i=0; i<LiLen; i++){
+                    var oInput = aLi[i].getElementsByTagName("input")[0];
+                    oInput.checked = a;
+                    aLi[i].switch = b;
+                    way(aLi[i]);
+                }
+                oCheckAll.switch = b;
+            }
+
+            for(var i=0; i<LiLen; i++){
+                aLi[i].index = i;
+                aLi[i].switch = true;
+                if( i%2 == 0 ){     //给li隔行变色
+                    aLi[i].style.background = "#f7ffff";
+                }
+
+                aLi[i].onmouseover = function () {      //当鼠标掠过变色
+                    Grey(this);
+                };
+
+                aLi[i].onmouseout = function () {       //当鼠标离开还原原色
+                    if(this.switch){
+                        Color(this);
+                    }
+                };
+
+                aLi[i].onclick = function () {
+                    var oInput = this.getElementsByTagName("input")[0];
+                    if(this.switch){        //如果该项未选
+                        oInput.checked = "checked";
+                        Grey(this);
+                        this.switch = false;
+                    } else {        //如果该项已选
+                        oInput.checked = "";
+                        Color(this);
+                        this.switch = true;
+                    }
+                    for(var j=0,k=0; j<LiLen; j++){
+                        if(aCheckBox[j].checked){
+                            k++;
+                        }
+                    }
+                    oInputAll.checked = k===LiLen;
+                    oCheckAll.switch = !(k===LiLen);
+                }
+            }
+            /*      //第二种方法，而且还要把“id="checkAll"”放到第一个input中
+            //alert(oCheckAll.checked);     //当复选框未选中时，checked为false
+            oCheckAll.onclick = function () {
+                if( this.checked ){        //已经不全选，则需全选
+                    for(var i=0; i<LiLen; i++){
+                        var oInput = aLi[i].getElementsByTagName("input")[0];
+                        oInput.checked = "checked";
+                        Grey(aLi[i]);
+                        aLi[i].switch = false;
+                    }
+                } else {       //已经全选，则需全不选
+                    for(var i=0; i<LiLen; i++){
+                        var oInput = aLi[i].getElementsByTagName("input")[0];
+                        oInput.checked = "";
+                        Color(aLi[i]);
+                        aLi[i].switch = true;
+                    }
+                }
+            };
+            */
+            oCheckAll.switch = true;        //未选中
+            var oInputAll = oCheckAll.getElementsByTagName("input")[0];
+            oCheckAll.onclick = function () {
+                if(oCheckAll.switch){       //未全选
+                    Select(true,false,Grey);
+                } else {
+                    Select(false,true,Color)
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:20px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        .checkAll{
+            width: 200px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+        .checkAll input{
+            margin-right: 7px;
+        }
+        input{
+            cursor: pointer;
+        }
+        ul{
+            border-top: 1px solid #999999;
+            width: 200px;
+            position: absolute;
+            left: 10px;
+            top: 35px;
+        }
+        ul li{
+            border-bottom: 1px solid #CCCCCC;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        ul li input{
+            margin-right: 10px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="checkAll" id="checkAll"><input type="checkbox"/>全选</div>
+<ul>
+    <li><input type="checkbox"/>私奔</li>
+    <li><input type="checkbox"/>花火</li>
+    <li><input type="checkbox"/>我爱你中国</li>
+    <li><input type="checkbox"/>北京北京</li>
+    <li><input type="checkbox"/>回来</li>
+    <li><input type="checkbox"/>爱有你才完美</li>
+</ul>
+
+</body>
+</html>

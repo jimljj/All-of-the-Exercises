@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>带缩略图的照片浏览</title>
+
+    <style>
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:16px; font-family:"楷体";}
+        /* CSS重置 */
+
+        body{
+            width: 100%;
+            height: 100%;
+            background: url("img/5.jpg") no-repeat;
+        }
+        #bg{
+            width: 600px;
+            height: 450px;
+            background: #ffffff;
+            border: 10px solid #666666;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -300px;
+            margin-top: -225px;
+        }
+        #bg #num,#bg #left,#bg #right,#bg #info{
+            background: #000;
+            color: #ffffff;
+            text-align: center;
+            opacity: 0.4;
+            position: absolute;
+        }
+        #bg #num,#bg #info{
+            width: 600px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 20px;
+        }
+        #bg #num{
+            top: 0;
+        }
+        #bg #pic{
+            width: 600px;
+            height: 450px;
+        }
+        #bg #left,#bg #right{
+            line-height: 50px;
+            width: 50px;
+            height: 50px;
+            font-size: 40px;
+            top: 50%;
+            margin-top: -25px;
+        }
+        #bg #left{
+            left: 20px;
+        }
+        #bg #right{
+            right: 20px;
+        }
+        #bg #info{
+            bottom: 0;
+        }
+        #point{
+            position: absolute;
+            top: 90%;
+            left: 50%;
+        }
+        #point li{
+            display: inline;
+            margin: 0 30px;
+            position: relative;
+        }
+        #point li #points{
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            line-height: 30px;
+            text-align: center;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        .#point li #pointPlus{
+            display: none;
+        }
+        .insets{
+            width: 60px;
+            height: 45px;
+            border: 3px solid #333333;
+            position: absolute;
+            top: -60px;
+            left: -17px;
+            display: block;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var oNum = document.getElementById("num");
+            var oPic = document.getElementById("pic");
+            var oLeft = document.getElementById("left");
+            var oRight = document.getElementById("right");
+            var oInfo = document.getElementById("info");
+            var oPoint = document.getElementById("point");
+            var aLi = oPoint.getElementsByTagName("li");
+
+            /* 初始化 */
+            oNum.innerHTML = "1/4";
+            oPic.src = "img/1.png";
+            oInfo.innerHTML = "CG画的猛禽——影鹰";
+            index = 1;
+
+            var aSrc = ["img/1.png","img/2.png","img/3.png","img/4.png"];
+            var aInfo = ["CG画的猛禽——影鹰","月夜下的性感狐女——魍魉","西方巴洛克风格变异恐怖碟女——魑魅","未来凶狠的异形反派机器人——oscur"];
+            var len = aSrc.length;
+            var content = [];
+
+            function allDisplay(){
+                oNum.innerHTML = index + "/" + len ;
+                oPic.src = aSrc[ index-1 ];
+                oInfo.innerHTML = aInfo[ index-1 ];
+            }
+
+            for(var i = 0; i < len; i++ ){
+                content += "<li><img id='points' src='img/point.png'/><img id='pointPlus'/></li>";
+            }
+            oPoint.innerHTML = content;
+            var marginLeft = 90*len/2;
+            oPoint.style.margin =  "0 " + -marginLeft + "px";
+
+            oLeft.onclick = function (){
+                if( index == 1 ){
+                    index = len;
+                } else {
+                    index--;
+                }
+                allDisplay();
+            };
+
+            oRight.onclick = function () {
+                if( index == 4 ){
+                    index = 1;
+                } else {
+                    index++;
+                }
+                allDisplay();
+            };
+
+            for( var j = 0 ; j < len; j++ ){
+                aLi[j].index = j;
+                aLi[j].onmouseover = function(){
+                    var oPointPlus = this.getElementsByTagName("img")[1];
+                    oPointPlus.className = "insets";
+                    oPointPlus.src = aSrc[ this.index ];
+                };
+                aLi[j].onmouseout = function(){
+                    var oPointPlus = this.getElementsByTagName("img")[1];
+                    oPointPlus.className = "";
+                    oPointPlus.src = "";
+                };
+                aLi[j].onmousedown = function(){
+                    var oPointPlus = this.getElementsByTagName("img")[1];
+                    oPointPlus.className = "";
+                    oPointPlus.src = "";
+                    oNum.innerHTML = this.index+1 + "/" + len;
+                    oPic.src = aSrc[ this.index ];
+                    oInfo.innerHTML = aInfo[ this.index ];
+                    index = this.index+1 ;
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="bg">
+    <span id="num">num/length</span>
+    <img id="pic"/>
+    <a id="left" href="#">《</a>
+    <a id="right" href="#">》</a>
+    <span id="info">带缩略图的图片轮换</span>
+</div>
+<ul id="point"></ul>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度文库评分</title>
+
+    <script>
+        window.onload = function () {
+            var aLi = document.getElementsByTagName("li");
+            var aImg = document.getElementsByTagName("img");
+            var oDiv = document.getElementsByTagName("div")[0];
+            var LiLen = aLi.length;
+            var onOff = "A";       //未进行评分的状态
+            var Num = 0;
+            var arrCom = ["很差","较差","还行","推荐","力荐"];
+
+            function Clear(){
+                for(var j=0; j<LiLen; j++){      //重新评分时，要先别把所有图片回归初始化
+                    aImg[j].src = "img/Undefined.png";
+                }
+            }
+
+            function Recover(thisNum){
+                for(var j=0; j<thisNum+1; j++){
+                    aImg[j].src = "img/Undefined.png";
+                }
+                oDiv.innerHTML = "<img src='img/Prompt.png'/>";
+            }
+
+            function BadCom(LiNum){
+                LiNum === 0 ? aImg[0].src="img/Bad.png" : (aImg[0].src="img/Bad.png")+(aImg[1].src="img/Bad.png");
+                oDiv.innerHTML = arrCom[LiNum];
+            }
+
+            function GoodCom(LiNum){
+                for(var j=0; j<LiNum+1; j++){
+                    aImg[j].src = "img/Good.png";
+                }
+                oDiv.innerHTML=arrCom[LiNum];
+            }
+
+            function MouseOut(LiNum){
+                if( onOff == "A" ){        //还未评分
+                    Recover(LiNum);
+                } else if(onOff == "B"){
+                    Clear();
+                    BadCom(Num);
+                } else if(onOff == "C"){
+                    Clear();
+                    GoodCom(Num);
+                }
+            }
+
+            function Comment(a,b,way,c){
+                for(var i=a; i<b; i++){     //评分
+                    aLi[i].index = i;
+
+                    aLi[i].onmouseover = function () {
+                        Clear();
+                        way(this.index);
+                    };
+
+                    aLi[i].onmouseout = function () {
+                        MouseOut(this.index);
+                    };
+
+                    aLi[i].onclick = function () {
+                        way(this.index);
+                        onOff = c;
+                        Num = this.index;
+                    };
+                }
+            }
+
+            Comment(0,2,BadCom,"B");
+            Comment(2,5,GoodCom,"C");
+        }
+    </script>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:15px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        span{
+            font-size: 20px;
+            height: 40px;
+            line-height: 40px;
+            position: absolute;
+        }
+        ul{
+            width: 125px;
+            height: 25px;
+            position: absolute;
+            left: 100px;
+            top: 7px;
+            background: #63a307;
+        }
+        ul img{
+            width: 25px;
+            height: 25px;
+            float: left;
+        }
+        div{
+            width: 240px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            color: #f79400;
+            position: absolute;
+            left: 235px;
+        }
+    </style>
+
+</head>
+<body>
+
+<span>总体评价：</span>
+<ul>
+    <li><img src="img/Undefined.png"></li>
+    <li><img src="img/Undefined.png"></li>
+    <li><img src="img/Undefined.png"></li>
+    <li><img src="img/Undefined.png"></li>
+    <li><img src="img/Undefined.png"></li>
+</ul>
+<div><img src="img/Prompt.png"/></div>
+
+</body>
+</html>

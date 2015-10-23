@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        body,dd,dl,h1,h2,h3,h4,h5,h6,form,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:12px; font-family: "楷体";}
+        li{ list-style: none;}
+        em{ font-style:normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ vertical-align: top; border:0;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        body{ background: #333;}
+        #pic{
+            width: 400px;
+            height: 500px;
+            position: relative;
+            margin: 71px auto;}
+        #pic img{
+            width: 400px;
+            height: 500px;
+            background: #ffffff url("img/loader_ico.gif") no-repeat center;}
+        #pic span,#pic p{
+            width: 400px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 18px;
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+            background: #333;
+            opacity: 0.5;}
+        #pic p{
+            bottom: 0;}
+        #pic span{
+            top: 0;}
+        #pic ul{
+            width: 40px;
+            position: absolute;
+            top: 0;
+            right: -50px;}
+        #pic li{
+            margin-bottom: 10px;
+            width: 40px;
+            height: 40px;
+            background: #666;
+            line-height: 40px;
+            text-align: center;
+            font-size: 30px;
+            color: #ffffff;
+            cursor: pointer;}
+        #pic .active{
+            background: #fc3;}
+    </style>
+
+    <script>
+        window.onload = function (e) {
+            var oDiv = document.getElementById("pic");
+            var oImg = oDiv.getElementsByTagName("img")[0];
+            var oSpan = oDiv.getElementsByTagName("span")[0];
+            var oP = oDiv.getElementsByTagName("p")[0];
+            var oUl = oDiv.getElementsByTagName("ul")[0];
+            var aLi = oDiv.getElementsByTagName("li");
+
+            var arrUrl = ["img/1.png","img/2.png","img/3.png","img/4.png"];
+            var arrText = ["CG画的猛禽——影鹰","月夜下的性感狐女——魍魉","西方巴洛克风格变异恐怖碟女——魑魅","未来凶狠的异形反派机器人——oscur"];
+            var len = arrUrl.length;
+            var num = 0;
+
+            for( var i=0; i<len; i++){
+                oUl.innerHTML += "<li>" + i + "</li>";
+            }
+
+            //初始化
+            function fnSwitch(){
+                oImg.src = arrUrl[num];
+                oSpan.innerHTML = 1+num + "/" + len;
+                oP.innerHTML = arrText[num];
+                for( var j=0; j<len; j++){
+                    aLi[j].className = "";
+                }
+                aLi[num].className = "active";
+            }
+            fnSwitch();
+
+
+            for( var i=0; i<len; i++){
+                aLi[i].index = i;
+                aLi[i].onclick = function (e) {
+                    num = this.index;
+                    fnSwitch();
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="pic">
+    <img src=""/>
+    <span>图片指示正在加载中……</span>
+    <p>文字说明正在加载中……</p>
+    <ul></ul>
+</div>
+
+</body>
+</html>
