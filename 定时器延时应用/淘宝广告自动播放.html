@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>淘宝广告自动播放</title>
+
+    <script>
+        window.onload = function () {
+            var oPic = document.getElementById("pic");
+            var oIntro = document.getElementById("introduce");
+            var oPrice = document.getElementById("price");
+            var aLi = document.getElementsByTagName("li");
+
+            var picArr = [
+                { url:"img/1.png", introduce:"CG鹰隼海报", price:"12元起"},
+                { url:"img/2.png", introduce:"月夜狐女玩偶", price:"30元起"},
+                { url:"img/3.png", introduce:"《蝶女》动画片", price:"35元起"},
+                { url:"img/4.png", introduce:"异型机器人", price:"375元起"},
+                { url:"img/5.jpg", introduce:"雪见卖萌海报", price:"15元起"},
+                { url:"img/6.jpg", introduce:"文艺照相机", price:"345元起"},
+                { url:"img/7.jpg", introduce:"泥沼小象玩偶", price:"25元起"},
+                { url:"img/bg.jpg", introduce:"旅游套餐", price:"1150元起"}
+            ];
+            var picLen = picArr.length
+
+            var I = 0;
+            var AddTimer = null;
+            var onOff = true;
+
+            AddTimer = setInterval(function () {
+                for(var i=0; i<picLen; i++){
+                    aLi[i].classList.remove("active");
+                }
+                aLi[I].classList.add("active");
+                oPic.src = picArr[I].url;
+                oIntro.innerHTML = picArr[I].introduce;
+                oPrice.innerHTML = picArr[I].price;
+                if(onOff){
+                    I++;
+                    if(I==picLen){
+                        onOff = false;
+                        I--;
+                    }
+                } else {
+                    I--;
+                    if(I==-1){
+                        onOff = true;
+                        I++;
+                    }
+                }
+            },1000);
+        }
+    </script>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:14px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+        
+        .wrap{
+            width: 600px;
+            height: 440px;
+            border: 1px solid orangered;
+            margin: 50px auto;
+            position: relative;
+        }
+        .wrap .left{
+            width: 100px;
+            height: 430px;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+        .wrap .right{
+            width: 100px;
+            height: 430px;
+            position: absolute;
+            right: 7px;
+            top: 5px;
+        }
+        .wrap .left li,.wrap .right li{
+            width: 100px;
+            height: 78px;
+            border: 1px solid palevioletred;
+            margin: 22px 0;
+            font-size: 13px;
+            line-height: 78px;
+            text-align: center;
+        }
+        .content{
+            position: absolute;
+            left: 114px;
+            top: 12px;
+        }
+        .content img{
+            width: 370px;
+            height: 412px;
+        }
+        .content span{
+            background: #f7c6bd;
+            width: 340px;
+            height: 50px;
+            line-height: 50px;
+            color: #d01615;
+            font-size: 40px;
+            display: block;
+            padding-left: 30px;
+            font-family: "楷体";
+            position: absolute;
+            top: 294px;
+            opacity: 0.6;
+        }
+        .content p{
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 50px;
+            color: #ffffff;
+        }
+        .wrap .left li.active,.wrap .right li.active{
+            background: palevioletred;
+            color: #ffffff;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="wrap">
+    <div class="content">
+        <img src="img/1.png" id="pic"/>
+        <span id="introduce">CG鹰隼海报</span>
+        <p id="price">12元起</p>
+    </div>
+    <ul class="left">
+        <li class="active">CG鹰隼海报</li>
+        <li>月夜狐女玩偶</li>
+        <li>《蝶女》动画片</li>
+        <li>异型机器人</li>
+    </ul>
+    <ul class="right">
+        <li>雪见卖萌海报</li>
+        <li>文艺照相机</li>
+        <li>泥沼小象玩偶</li>
+        <li>旅游套餐</li>
+    </ul>
+</div>
+
+</body>
+</html>

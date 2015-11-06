@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动轮换选项卡</title>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:15px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        .warp{
+            width: 800px;
+            height: 500px;
+            margin: auto;
+            position: relative;
+        }
+        .first li{
+            display: block;
+            width: 100px;
+            border: 1px solid #c6c6c6;
+            background: #e7e7e7;
+            text-align: center;
+            font-size: 28px;
+            position: absolute;
+            left: 0;
+            cursor: pointer;
+        }
+        .main,.main img {
+            width: 698px;
+            height: 500px;
+            position: absolute;
+            right: 0;
+        }
+        .main ul.activeSec{
+            display: inline;
+        }
+        .activeSec li{
+            height: 30px;
+            line-height: 30px;
+            background: #000000;
+            opacity: 0.9;
+            color: #ffffff;
+            text-align: center;
+            border-right: 1px solid #ffffff;
+            cursor: pointer;
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+        }
+        .first li.activeFir{
+            background: #ffffff;
+        }
+        .main .activeSec .activeSecLi{
+            background: #ef3163;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oImg = document.getElementById("img");
+            var oFirst = document.getElementById("first");
+            var FirLiName = ["组图一","组图二","组图三"];
+            var FirLiLen = FirLiName.length;
+            var FirHtml = "";
+
+            for(var i=0; i<FirLiLen; i++){      //生成相应的几个分类
+                FirHtml += "<li>" + FirLiName[i] + "</li>";
+            }
+            oFirst.innerHTML = FirHtml;
+
+            var aFirLi = oFirst.getElementsByTagName("li");
+            for(var i=0; i<FirLiLen; i++){      //给第一级别的分类绑定样式
+                aFirLi[i].style.height = (500/FirLiLen)-2 + "px";
+                aFirLi[i].style.top = (500/FirLiLen)*i + "px";
+                aFirLi[i].style.lineHeight = (500/FirLiLen)-2 + "px";
+            }
+
+            var imgUrl = [["img/5.jpg","img/bg.jpg","img/6.jpg"],["img/bg.jpg","img/6.jpg","img/7.jpg","img/5.jpg"],["img/7.jpg","img/bg.jpg"]];
+            var imgName = [["雪见发呆的眼神","风光旖旎的现代异域","望着相机的文艺女"],["风光旖旎的现代异域","望着相机的文艺女","深陷沼泽的小象","雪见发呆的眼神"],["深陷沼泽的小象","风光旖旎的现代异域"]];
+            var oSecond = document.getElementById("second");
+
+            //初始化
+            var SecLiLen = imgUrl[0].length;       //某组图片的个数
+            var SecHtml = "";
+            for (var i = 0; i < SecLiLen; i++) {      //生成子栏目的li
+                SecHtml += "<li>" + imgName[0][i] + "</li>";
+            }
+            oSecond.innerHTML = SecHtml;
+            var aSecLi = oSecond.getElementsByTagName("li");
+            for (var i = 0; i < SecLiLen; i++) {      //为子栏目的每个li设置样式
+                aSecLi[i].style.width = (698 - SecLiLen) / SecLiLen + "px";
+                aSecLi[i].style.left = 698 / SecLiLen * i + "px";
+            }
+            aFirLi[0].classList.add("activeFir");
+            aSecLi[0].classList.add("activeSecLi");
+            oImg.src = imgUrl[0][0];
+
+            AutoPlay();
+         /* autoPlay();        //这是一个大神的修改我的代码后的代码，主要是换了数据格式以及各种名称
+            var imgArr = [        //这是一个大神的修改我的代码后的代码，主要是换了数据格式以及各种名称
+                    [
+                        {url: 'img/5.jpg', description: '雪见发呆的眼神'},
+                        {url: 'img/bg.jpg', description: '风光旖旎的现代异域'},
+                        {url: 'img/6.jpg', description: '望着相机的文艺女'},
+                    ],
+                    [
+                        {url: 'img/bg.jpg', description: '风光旖旎的现代异域'},
+                        {url: 'img/6.jpg', description: '望着相机的文艺女'},
+                        {url: 'img/7.jpg', description: '深陷沼泽的小象'},
+                        {url: 'img/5.jpg', description: '雪见发呆的眼神'},
+                    ],
+                    [
+                        {url: 'img/7.jpg', description: '深陷沼泽的小象'},
+                        {url: 'img/bg.jpg', description: '风光旖旎的现代异域'},
+                    ]
+            ];
+
+            function autoPlay() {
+                var groupIndex = 0; // 记录选中的是哪个组
+                var itemIndexOfGroup = 0;
+
+
+                var timer = setInterval(function() {
+                    var items = imgArr[groupIndex]; // 选中组的图片和描述数组
+                    var itemLen = items.length;
+
+                    // 设置oSecond的li
+                    var secHtml = '';
+                    items.forEach(function(item) {
+                        secHtml += '<li>' + item.description + '</li>';
+                    });
+                    oSecond.innerHTML = secHtml;
+
+                    //为子栏目的每个li设置样式
+                    var aSecLi = oSecond.getElementsByTagName("li");
+                    for (var i = 0; i < itemLen; i++) {
+                        aSecLi[i].style.width = (698 - itemLen) / itemLen + "px";
+                        aSecLi[i].style.left = 698 / itemLen * i + "px";
+                    }
+
+                    for (var i = 0; i < FirLiLen; i++) {
+                        aFirLi[i].classList.remove("activeFir");
+                    }
+
+                    aFirLi[groupIndex].classList.add("activeFir");
+                    aSecLi[itemIndexOfGroup].classList.add("activeSecLi");
+                    oImg.src = items[itemIndexOfGroup].url;
+
+                    itemIndexOfGroup++;
+                    if(itemIndexOfGroup == itemLen) {
+                        itemIndexOfGroup = 0;
+                        groupIndex++;
+                        if(groupIndex == imgArr.length) {
+                            groupIndex = 0;
+                        }
+                    }
+                }, 1000);
+            }*/
+
+            function AutoPlay() {
+                var FirNum = 0;     //选择第几组图片
+                var SecNum = 0;     //选择这组图片中得哪一张
+
+                setInterval(function () {
+                    SecLiLen = imgUrl[FirNum].length;       //某组图片的个数
+
+                    SecHtml = "";
+                    for (var i = 0; i < SecLiLen; i++) {      //生成子栏目的li
+                        SecHtml += "<li>" + imgName[FirNum][i] + "</li>";
+                    }
+                    oSecond.innerHTML = SecHtml;
+
+                    aSecLi = oSecond.getElementsByTagName("li");
+                    for (var i = 0; i < SecLiLen; i++) {      //为子栏目的每个li设置样式
+                        aSecLi[i].style.width = (698 - SecLiLen) / SecLiLen + "px";
+                        aSecLi[i].style.left = 698 / SecLiLen * i + "px";
+                    }
+
+                    for (var i = 0; i < FirLiLen; i++) {
+                        aFirLi[i].classList.remove("activeFir");
+                    }
+                    aFirLi[FirNum].classList.add("activeFir");
+                    aSecLi[SecNum].classList.add("activeSecLi");
+                    oImg.src = imgUrl[FirNum][SecNum];
+
+                    SecNum++;
+                    if (SecNum == SecLiLen) {
+                        SecNum = 0;
+                        FirNum++;
+                        if (FirNum == FirLiLen) {
+                            FirNum = 0;
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+
+<div class="warp">
+    <ul class="first" id="first"></ul>
+    <div class="main" id="main">
+        <img id="img"/>
+        <ul class="activeSec" id="second"></ul>
+    </div>
+</div>
+
+</body>
+</html>

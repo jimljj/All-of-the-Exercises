@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>按钮控制图片上下滚动</title>
+
+    <script>
+        window.onload = function () {
+            var oMian = document.getElementById("main");
+            var aItems = oMian.getElementsByTagName("li");
+            var ItemsLen = aItems.length;
+            var oUp = document.getElementById("up");
+            var oDown = document.getElementById("down");
+            var timer = null;
+
+            for(var i=0; i<ItemsLen; i++){      //为每个li设置偏移量
+                aItems[i].style.top = 151*i + "px";
+            }
+            var ContentHeight = 151*ItemsLen-411;      //总共可偏移量
+            var CurrentPosition = 0;        //ul现在的位置
+
+            oUp.onmousedown = function () {     //往上拉
+                if(CurrentPosition == (0-ContentHeight)){
+                    alert("到底啦~");
+                } else {
+                    timer = setInterval(function () {
+                        CurrentPosition -= 2;
+                        oMian.style.top = CurrentPosition + "px";
+                        if (CurrentPosition == (0 - ContentHeight)) {
+                            clearInterval(timer);
+                            alert("到底啦~");
+                        }
+                        oUp.onmouseup = function () {
+                            clearInterval(timer);
+                            CurrentPosition = parseFloat(oMian.style.top);
+                        };
+                    }, 20);
+                }
+            };
+
+            oDown.onmousedown = function () {       //往下移
+                if(CurrentPosition != 0){
+                    timer = setInterval(function () {
+                        CurrentPosition += 2;
+                        oMian.style.top = CurrentPosition + "px";
+                        if(CurrentPosition == 0){
+                            clearInterval( timer );
+                            alert("上面没有了~");
+                        }
+                        oDown.onmouseup = function () {
+                            clearInterval( timer );
+                            CurrentPosition = parseFloat(oMian.style.top);
+                        }
+                    },20);
+                } else {
+                    alert("上面没有了~");
+                }
+            };
+        }
+    </script>
+
+    <style>
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:15px; font-family:"楷体";}
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        /* CSS重置 */
+
+        .wrap{
+            width: 200px;
+            height: 500px;
+            position: relative;
+            margin: 50px auto;
+            background: #f7f7f7;
+            border: 1px solid #989bac;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .title{
+            width: 170px;
+            height: 35px;
+            margin: 5px 5px 0;
+            background: #3b5679;
+            color: #ffffff;
+            padding: 0 10px;
+            line-height: 35px;
+            font-weight: bold;
+            position: absolute;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .title .more{
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+        }
+        .up,.down{
+            width: 190px;
+            height: 21px;
+            margin: 0 5px;
+            position: absolute;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .up{
+            background: #efefe7 url("img/up.png") no-repeat center 6px;
+            top: 40px;
+        }
+        .down{
+            bottom: 5px;
+            background: #efefe7 url("img/down.png") no-repeat center 6px;
+        }
+        .main{
+            border: 1px solid #d8dede;
+            width: 190px;
+            height: 411px;
+            overflow: hidden;
+            margin: 0 4px;
+            position: absolute;
+            top: 61px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .content{
+            width: 190px;
+            height: 2000px;
+            position: absolute;
+        }
+        .content li{
+            border-bottom: 1px solid #d4d4da;
+            width: 170px;
+            margin: 0 10px;
+            height: 150px;
+            position: absolute;
+        }
+        .content li span{
+            position: absolute;
+            top: 25px;
+            left: 10px;
+            width: 60px;
+            height: 110px;
+            overflow: hidden;
+        }
+        .content li img{
+            position: absolute;
+            right: 10px;
+            top: 45px;
+            width: 80px;
+            height: 60px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="wrap" class="wrap">
+    <span id="title" class="title">旅游套餐<a id="more" class="more">》更多</a></span>
+    <div id="up" class="up"></div>
+    <div class="main">
+        <ul id="main" class="content">
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+            <li>
+                <span>想要一个白天看遍各国的风情吗？那就来广厦天都城吧~</span>
+                <img src="img/bg.jpg"/>
+            </li>
+        </ul>
+    </div>
+    <div id="down" class="down"></div>
+</div>
+
+</body>
+</html>

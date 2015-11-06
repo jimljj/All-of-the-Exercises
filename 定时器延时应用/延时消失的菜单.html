@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>延时消失的菜单</title>
+
+    <script>
+        window.onload = function () {
+            var Content = document.getElementById("content");
+            var aDiv = Content.getElementsByTagName("div");
+            var oColumn = document.getElementById("column");
+            var len = aDiv.length;
+            var arr = ["A", "B", "C", "D"];
+            var arrItems = [[], ["弹幕墙", "查水费", "查成绩"], ["校招流程", "校招网申", "社招流程", "社招网申"], ["咨询热线", "微信方式"]];
+
+            var htmlLi = "";
+            var num = 0;
+            var timer = null;
+            var oLi = null;
+
+            function DisplayLi(oLi) {
+                for (var j = 0; j < len; j++) {       //添加选中样式
+                    aDiv[j].className = "box" + arr[j];
+                }
+                oLi.className = "box" + arr[oLi.index] + " " + "active";
+
+                num = arrItems[oLi.index].length;      //产生相应的li并且给每个li附上内容
+                htmlLi = "";
+                for (var j = 0; j < num; j++) {
+                    htmlLi += "<li>" + arrItems[oLi.index][j] + "</li>";
+                }
+                oColumn.innerHTML = htmlLi;
+
+                oColumn.style.left = 80 * oLi.index + "px";      //给ul定位
+
+                oColumn.style.display = "block";
+            }
+
+            function Disappear(){
+                for (var j = 0; j < len; j++) {       //所有div样式归位
+                    aDiv[j].className = "box" + arr[j];
+                }
+
+                num = arrItems[oLi.index].length;      //产生相应的li并且给每个li附上内容
+                htmlLi = "";
+                for (var j = 0; j < num; j++) {
+                    htmlLi += "<li>" + arrItems[oLi.index][j] + "</li>";
+                }
+                oColumn.innerHTML = htmlLi;
+
+                oColumn.style.left = 80 * oLi.index + "px";      //给ul定位
+
+                oColumn.style.display = "none";
+            }
+
+            for (var i = 0; i < len; i++) {
+                aDiv[i].index = i;
+                aDiv[i].onmouseover = function () {
+                    clearTimeout( timer );      //关闭正在让li消失的定时器
+                    oLi = this;
+                    setTimeout(function () {
+                        DisplayLi(oLi);
+                    }, 700);
+                };
+                aDiv[i].onmouseout = function () {
+                    timer = setTimeout(Disappear,700);
+                };
+            }
+
+            oColumn.onmouseover = function () {
+                clearTimeout( timer );      //关闭正在让li消失的定时器
+
+                var aLi = this.getElementsByTagName("li");
+                var LiLen = aLi.length;
+                for(var i=0; i<LiLen; i++){      //此处有个bug，就是当显示出子栏后，第一次鼠标略过子栏的第一项时，这一项的背景不会生成activebg的背景
+                    aLi[i].onmouseover = function () {
+                        for(var j=0; j<LiLen; j++){
+                            aLi[j].style.background = "url('img/column.jpg') no-repeat";
+                        }
+                        this.style.background = "url('img/activebg.jpg') no-repeat";
+                    }
+                }
+            };
+
+            oColumn.onmouseout = function () {
+                timer = setTimeout(Disappear,700);
+            }
+        }
+    </script>
+    
+    <style>
+        body,h1,h2,h3,h4,h5,h6,dl,dd{ margin:0; font-size:12px; font-family:"宋体"; background:#221e1f;}
+        ol,ul{ list-style:none; padding:0; margin:0;}
+        a{ text-decoration:none;}
+        img{ border:none;}
+        th,td{ padding:0;}
+        table{ border-collapse:collapse;}
+        form{ margin:0;}
+        input,textarea{ margin:0; padding:0;}
+        select{ margin:0;}
+        textarea{ resize:none; overflow:auto; outline:none;}
+        /* 进行css重置 */
+
+        /* 清浮动 */
+        .clear{ zoom:1;}
+        .clear:after{ content:""; display:block; clear:both;}
+
+        /* 主导航栏样式描写 */
+        .boxLeft{ width:396px; height:32px; background:url("img/outleft.jpg") no-repeat 0 0;}
+        .boxRight{ background:url("img/outright.jpg") no-repeat 391px 0;}
+        .box{ background:url("img/outmiddle.jpg") repeat-x; margin:0 5px;}
+        .box div{ background:url("img/inbutton.jpg") no-repeat 0 5px; float:left; width:95px; line-height:32px; text-align:center; color:#4c463a; font-weight:bold; cursor: pointer;}
+        .box .boxA,.box .boxB,.box .boxC{ padding-right:2px;}
+        .box .active{ background:url("img/active.jpg") no-repeat 0 5px; color:#fff;}
+
+        /*子栏目样式描写*/
+        #column{
+            position: absolute;
+            top: 36px;
+        }
+        #column li{
+            background: url("img/column.jpg") no-repeat;
+            float: left;
+            width: 97px;
+            height: 23px;
+            line-height: 23px;
+            text-align: center;
+            color:#989bac;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="boxLeft">
+    <div class="boxRight">
+        <div class="box clear" id="content">
+            <div class="boxA">首页</div>
+            <div class="boxB">产品</div>
+            <div class="boxC">加入我们</div>
+            <div class="boxD">联系我们</div>
+        </div>
+    </div>
+</div>
+<ul id="column" class="clear"></ul>
+
+</body>
+</html>
