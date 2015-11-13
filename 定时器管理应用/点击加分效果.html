@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点击加分效果</title>
+
+    <script type="text/javascript" src="JimFnLibrary.js"></script>
+    <script>
+        window.onload = function () {
+            var oWrap = document.getElementById("wrap");
+            var aLi = oWrap.getElementsByTagName("li");
+            var liLen = aLi.length;
+            var num = 0;
+
+            for(var i=0; i<liLen; i++){
+                aLi[i].style.left = 100*i + "px";
+            }
+
+            var oProgress = document.getElementById("progress");
+            var progressStr = "";
+            for(var i=0; i<50; i++){        //这样就开了50个定时器，虽然有点耗资源，但是效果不错
+                progressStr += "<div></div>"
+            }
+            oProgress.innerHTML = progressStr;
+            var aDiv = oProgress.getElementsByTagName("div");
+            var divLen = aDiv.length;
+            var divNum = 0;
+            var onOff = true;       //判断是进度条前半段（添加颜色），还是后半段（颜色变淡颜色）
+
+            oWrap.onclick = function () {
+                clearInterval( oWrap.timer );
+                oWrap.timer = setInterval(function () {
+                    changeObj(aLi[num],"top",10,-200);      //向上移动li
+                    changeObj(aLi[num],"opacity",0.05,0);        //将li隐藏
+                    num++;
+                    if(num==liLen){
+                        changeObj(aLi[liLen-1],"top",0,-200, function () {     //一定要等到最后一个li到位后，再还原（不过这里的步长只能填0或者1，不太懂为什么，看的大神有想法的可以给我留言）
+                            for(var j=0; j<liLen; j++){
+                                aLi[j].style.top = "0px";
+                                changeObj(aLi[j],"opacity",1,1);
+                            }
+                            num = 0;
+                        });
+                        clearInterval(oWrap.timer);
+                    }
+                },300);
+
+                progressBar("deepskyblue", function () {        //执行进度条前半段
+                    progressBar("", function () {       //执行进度条后半段
+                        changeObj(aDiv[divLen-1],"opacity",0,0, function () {        //一定要等到进度条最后一个div的颜色完全变淡后，再还原(这里的问题也和上面一样)
+                            for(var j=0; j<divLen; j++){
+                                aDiv[j].style.background = "white";
+                                changeObj(aDiv[j],"opacity",1,1);
+                            }
+                        })
+                    });
+                });
+            };
+
+            function progressBar(color,endFn){
+                clearInterval( oProgress.timer );
+                oProgress.timer = setInterval(function () {
+                    onOff ? aDiv[divNum].style.background=color : changeObj(aDiv[divNum],"opacity",0.1,0);
+                    divNum++;
+                    if(divNum==divLen){
+                        divNum = 0;
+                        onOff = !onOff;
+                        clearInterval( oProgress.timer );
+                        endFn && endFn();
+                    }
+                },30);
+            }
+        }
+    </script>
+
+    <style>
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        body,h1,h2,h3,h4,h5,h6,form,input,textarea,select,ul,ol,dl,dd,th,td,p,pre{ margin:0; padding:0; font-size:40px; font-family:"楷体";}
+        /* CSS重置 */
+
+        .wrap{
+            width: 1000px;
+            height: 100px;
+            border: 1px solid #3b5679;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -500px;
+            margin-top: -50px;
+        }
+        .wrap li{
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+        }
+        .progress{
+            width: 1000px;
+            height: 100px;
+            border: 1px solid #3b5679;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -500px;
+            margin-top: -50px;
+        }
+        .progress div{
+            width: 20px;
+            height: 100px;
+            float: left;
+        }
+    </style>
+
+</head>
+<body>
+
+<ul class="wrap" id="wrap">
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+    <li>+1</li>
+</ul>
+<div class="progress" id="progress"></div>
+
+</body>
+</html>

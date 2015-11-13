@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片与信息自动切换</title>
+
+    <script type="text/javascript" src="JimFnLibrary.js"></script>
+    <script>
+        window.onload = function () {
+            var oContent = document.getElementById("content");
+            var arrInfo = [
+                {url:"img/4.jpg",description:"一个带着超大眼镜的小萝莉在做噤声的手势，示意你专心看demo"},
+                {url:"img/5.jpg",description:"这好像是一些颜色各异的果冻杯，尤其是最上面那个I Love You的颜色，真是诡异"},
+                {url:"img/6.jpg",description:"又是一名小萝莉，她在拿着单反拍樱花树下的春天，非常可爱"},
+                {url:"img/7.jpg",description:"还是这名小萝莉，拿着和她半张脸这么大的单反，再拍湖光里的山色"},
+                {url:"img/8.jpg",description:"额。。这张照片或许是那个小萝莉长到情窦初开的年纪，拍下的写真，很文艺"}
+            ];
+            var InfoLen = arrInfo.length;
+            var contentStr = "";
+
+            for(var i=0; i<InfoLen; i++){       //动态获取数据，将数据写入ul中
+                contentStr += "<li><img src='" + arrInfo[i].url + "'/><span>" + arrInfo[i].description + "</span></li>";
+            }
+            oContent.innerHTML = contentStr;
+
+            var aSpan = oContent.getElementsByTagName("span");
+            var num = 0;
+            tab();
+            function tab(){
+                changeObj( oContent,"left",70,-583*num+3, function () {        //这是运用之前写的JS文件——JimFnLibrary.js直接调用的
+                    changeObj( aSpan[num],"bottom",20,0, function () {
+                        setTimeout(function () {
+                            changeObj(aSpan[num],"bottom",20,-78, function () {
+                                num++;
+                                num%=InfoLen;
+                                tab();      //自己可以重新调用自己
+                            });
+                        },2000);
+                    });
+                });
+            }
+        }
+    </script>
+
+    <style>
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        body,h1,h2,h3,h4,h5,h6,form,input,textarea,select,ul,ol,dl,dd,p,pre,th,td{ margin:0; padding:0; font-size:14px; font-family:"楷体";}
+        /* CSS重置 */
+
+        .wrap{
+            width: 580px;
+            height: 430px;
+            border: 7px solid #989bac;
+            padding: 3px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -300px;
+            margin-top: -225px;
+            background: lightgrey;
+            overflow: hidden;
+            -webkit-border-radius: 14px;
+            -moz-border-radius: 14px;
+            border-radius: 14px;
+        }
+        .content{
+            width: 3000px;
+            height: 430px;
+            position: absolute;
+            left: 3px;
+            top: 3px;
+        }
+        .content li{
+            float: left;
+            margin-right: 3px;
+            position: relative;
+        }
+        .content li img{
+            width: 580px;
+            height: 430px;
+            -webkit-border-radius: 7px;
+            -moz-border-radius: 7px;
+            border-radius: 7px;
+        }
+        .content li span{
+            width: 500px;
+            height: 75px;
+            padding: 0 40px;
+            background: #000;
+            color: #FFFFFF;
+            font-size: 20px;
+            opacity: 0.6;
+            text-align: center;
+            line-height: 37px;
+            z-index: 1;
+            position: absolute;
+            left: 0;
+            bottom: -78px;
+            -webkit-border-radius: 7px;
+            -moz-border-radius: 7px;
+            border-radius: 7px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="wrap">
+    <ul class="content" id="content"></ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟新浪数码频道选项卡</title>
+
+    <script type="text/javascript" src="JimFnLibrary.js"></script>
+    <script>
+        window.onload = function () {
+            var oSubContent = document.getElementById("subContent");
+            var arrNew = [
+                {url:"img/1.jpg",description:"纸质阅读的好处……让我们共同从书中寻找智慧，领略人生……"},
+                {url:"img/2.jpg",description:"两只黄鹂鸣翠柳？虽然不知道是不是黄鹂，姑且就算它是吧（^_^）~"},
+                {url:"img/3.jpg",description:"初开的藏红花在风中摇曳，管他是不是藏红花，这只是个demo"},
+                {url:"img/4.jpg",description:"一个带着超大眼镜的小萝莉在做噤声的手势，示意你专心看demo"},
+                {url:"img/5.jpg",description:"这好像是一些颜色各异的果冻杯，尤其是最上面那个I Love You的颜色，真是诡异"},
+                {url:"img/6.jpg",description:"又是一名小萝莉，她在拿着单反拍樱花树下的春天，非常可爱"},
+                {url:"img/7.jpg",description:"还是这名小萝莉，拿着和她半张脸这么大的单反，再拍湖光里的山色"},
+                {url:"img/8.jpg",description:"额。。这张照片或许是那个小萝莉长到情窦初开的年纪，拍下的写真，很文艺"}
+            ];
+            var newLen = arrNew.length;
+            var arrClassic = [
+                {url:"img/3.jpg",description:"初开的藏红花在风中摇曳，管他是不是藏红花，这只是个demo"},
+                {url:"img/4.jpg",description:"一个带着超大眼镜的小萝莉在做噤声的手势，示意你专心看demo"},
+                {url:"img/5.jpg",description:"这好像是一些颜色各异的果冻杯，尤其是最上面那个I Love You的颜色，真是诡异"},
+                {url:"img/6.jpg",description:"又是一名小萝莉，她在拿着单反拍樱花树下的春天，非常可爱"},
+                {url:"img/7.jpg",description:"还是这名小萝莉，拿着和她半张脸这么大的单反，再拍湖光里的山色"},
+                {url:"img/8.jpg",description:"额。。这张照片或许是那个小萝莉长到情窦初开的年纪，拍下的写真，很文艺"}
+            ];
+            var classicLen = arrClassic.length;
+
+            var oSubTitle = document.getElementById("subTitle");
+            var aTitleLi = oSubTitle.getElementsByTagName("li");
+            var titleLen = aTitleLi.length;
+            for(var i=0; i<titleLen; i++){      //给子标题绝对定位
+                aTitleLi[i].style.left = 72*i + "px";
+            }
+
+            var aContentLi = oSubContent.getElementsByTagName("li");
+            var oDot = document.getElementById("dot");
+            var aDotLi = oDot.getElementsByTagName("li");
+            var dotLiNum = 0;
+            var dotStr = "";
+            var oRight = document.getElementById("right");
+            var oLeft = document.getElementById("left");
+            var I = 0;      //第几部分的内容
+
+            function Display(obj){
+                for(var j=0; j<titleLen; j++){
+                    aTitleLi[j].classList.remove("activeTitle");
+                }
+                obj.classList.add("activeTitle");
+
+                contentStr = "";
+                var arrContent = obj.index ? arrClassic : arrNew;
+                var contentLen = obj.index ? classicLen : newLen;
+                for(var i=0; i<contentLen; i++){        //给内容块添加li
+                    contentStr += "<li><img src=" + arrContent[i].url + "/><span>" + arrContent[i].description + "</span></li>";
+                }
+                oSubContent.innerHTML = contentStr;
+
+                for(var i=0; i<contentLen; i++){        //给子内容li绝对定位
+                    aContentLi[i].style.left = 170*i + "px";
+                }
+                dotLiNum = contentLen%3 ? parseInt(contentLen/3)+1 : parseInt(contentLen/3);        //获取圆点的数目
+                dotStr = "";
+                for(var i=0; i<dotLiNum; i++){          //添加圆点
+                    dotStr += '<li style="left:'+ 110/dotLiNum*i +'px"></li>';
+                }
+                oDot.innerHTML = dotStr;
+                aDotLi[0].classList.add("activeDot");
+
+                oRight.style.left = 110/dotLiNum*(dotLiNum-1)+285 +"px";
+            }
+
+            function moveAndChange(num){
+                num<0 ? I-- : I++;
+                if(I==num){
+                    alert("前面没有内容了，到底啦~");
+                    num<0 ? I = 0 : I = dotLiNum-1;
+                } else {
+                    for(var j=0; j<dotLiNum; j++){
+                        aDotLi[j].classList.remove("activeDot");
+                    }
+                    aDotLi[I].classList.add("activeDot");
+
+                    clearInterval( oSubContent.timer );
+                    oSubContent.timer = setInterval(function () {
+                        var step = parseInt( getStyle(oSubContent,"left") );
+                        num<0 ? step += 55 : step -= 55;
+                        if( num<0 ){
+                            if(step>-510*I) {
+                                step = -510*I;
+                            }
+                        } else {
+                            if(step<-510*I) {
+                                step = -510*I;
+                            }
+                        }
+
+                        oSubContent.style.left = step + "px";
+
+                        if(step == -510*I){
+                            clearInterval( oSubContent.timer );
+                        }
+                    },30);
+                }
+            }
+
+            //初始化
+            for(var i=0; i<titleLen; i++){
+                aTitleLi[i].index = i;
+            }
+            Display(aTitleLi[0]);
+
+            for(var i=0; i<titleLen; i++){
+                aTitleLi[i].onmouseover = function () {
+                    oSubContent.style.left = "0px";
+                    Display(this);
+                    I = 0;
+                }
+            }
+
+            oRight.onclick = function () {
+                moveAndChange( dotLiNum );
+            };
+
+            oLeft.onclick = function () {
+                moveAndChange( -1 );
+            };
+
+        }
+    </script>
+
+    <style>
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:auto;}
+        body,dd,dl,form,h1,h2,h3,h4,h5,h6,input,textarea,ul,ol,p,pre,th,td,select{ margin:0; padding:0; font-size:16px; font-family:"楷体";}
+        /* CSS重置 */
+
+        .wrap{
+            width: 600px;
+            height: 300px;
+            margin: 100px auto;
+            border: 1px solid grey;
+            background: grey;
+            position: relative;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .wrap .title{
+            font-size: 35px;
+            color: #FFFFFF;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+        .wrap .subTitle{
+            position: absolute;
+            left: 200px;
+            top: 20px;
+        }
+        .wrap .subTitle li{
+            width: 70px;
+            height: 25px;
+            background: #d6eff7;
+            float: left;
+            border: 1px solid #b7e2f7;
+            margin-right: 1px;
+            text-align: center;
+            line-height: 25px;
+            color: #4590bb;
+            cursor: pointer;
+            position: absolute;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+        .wrap .content{
+            width: 600px;
+            height: 253px;
+            border: 1px solid darkgrey;
+            position: absolute;
+            left: -1px;
+            top: 46px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            background: darkgrey;
+        }
+        .wrap .content .left,.wrap .content .right{
+            border: 1px solid #6aa8c1;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            bottom: 13px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .wrap .content .left{
+            background: #a5def7 url("img/left.png") no-repeat center 50%;
+            left: 35%;
+        }
+        .wrap .content .right{
+            background: #a5def7 url("img/right.png") no-repeat center 50%;
+            left: 60%;
+        }
+        .wrap .content .contentWrap{
+            width: 500px;
+            height: 200px;
+            position: absolute;
+            left: 50px;
+            top: -1px;
+            border: 1px solid #ffffee;
+            background: #ffffee;
+            overflow: hidden;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .wrap .content .subContent{
+            width: 2000px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+        }
+        .wrap .content .subContent li{
+            float: left;
+            width: 145px;
+            height: 130px;
+            position: absolute;
+            top: 35px;
+        }
+        .wrap .content .subContent li img{
+            width: 120px;
+            height: 60px;
+            border: 1px solid #e6e0e0;
+            padding: 5px;
+            position: absolute;
+            left: 12px;
+            top: 10px;
+        }
+        .wrap .content .subContent li span{
+            font-size: 12px;
+            position: absolute;
+            left: 12px;
+            top: 90px;
+            display: block;
+            width: 130px;
+            text-align: center;
+        }
+        .wrap .content .dot{
+            width: 70px;
+            text-align: center;
+            position: absolute;
+            bottom: 18px;
+            left: 42%;
+        }
+        .wrap .content .dot li{
+            width: 10px;
+            height: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            float: left;
+            position: absolute;
+            bottom: 0;
+            border: 1px solid #c6c6c6;
+            background: #ffffee;
+        }
+        .wrap .subTitle li.activeTitle{
+            background: #ffffee;
+            border-bottom: 1px solid #ffffee;
+            color: #17830f;
+            z-index: 1;
+        }
+        .wrap .content .dot li.activeDot{
+            background: dodgerblue;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="wrap">
+    <span class="title">图片赏析</span>
+    <ul class="subTitle" id="subTitle">
+        <li>新照片</li>
+        <li>经典照</li>
+    </ul>
+    <div class="content">
+        <div class="contentWrap">
+            <ul class="subContent" id="subContent"></ul>
+        </div>
+        <div class="left" id="left"></div>
+        <ul class="dot" id="dot"></ul>
+        <div class="right" id="right"></div>
+    </div>
+</div>
+
+</body>
+</html>
