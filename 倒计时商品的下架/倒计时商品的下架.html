@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>倒计时商品的下架</title>
+
+    <script type="text/javascript" src="JimFnLibrary(1.1).js"></script>
+    <script>
+        window.onload = function () {
+            var arrGoodsInfo = [
+                { futureTime:"November 17 2015 20:36:00",url:"img/10.jpg",introduce:"【成人】 2015/16 主场 长袖球衣 阿迪达斯 红色",price:"促销价：￥129元"},
+                { futureTime:"November 17 2015 20:36:10",url:"img/11.jpg",introduce:"Nike NIKE AIR MAX 90 男子运动鞋683282",price:"促销价：￥499元"},
+                { futureTime:"November 17 2015 20:36:20",url:"img/12.jpg",introduce:"AKG/爱科技 y50 耳机头戴式 音乐线控麦克风耳麦",price:"促销价：￥229元"},
+                { futureTime:"November 17 2015 20:36:30",url:"img/13.jpg",introduce:"耐克足球5号英超用球正品NIKE训练比赛足球",price:"促销价：￥146元"}
+            ];
+            var goodsLen = arrGoodsInfo.length;     //共有几件限购商品
+            var oGoods = document.getElementById("goods");
+            var strGoodsHTML = "<dt>限购商品</dt>";
+
+            for(var i=0; i<goodsLen; i++){
+                strGoodsHTML += "<dd> <input type='text' value='"+ arrGoodsInfo[i].futureTime +"' class='future'/> <input type='button' value='开始' class='begin'/> <p>剩余00天00时00分00秒</p> <img class='pic' src='"+ arrGoodsInfo[i].url +"'/> <em>"+ arrGoodsInfo[i].introduce +"</em> <span>"+ arrGoodsInfo[i].price +"</span> </dd>";
+            }
+            oGoods.innerHTML = strGoodsHTML;
+
+            var aDd = document.getElementsByTagName("dd");
+            for(var i=0; i<goodsLen; i++){
+                aDd[i].style.left = 161*i + "px";
+            }
+
+            var aP = oGoods.getElementsByTagName("p");
+            var aInput = oGoods.getElementsByTagName("input");
+            var inputLen = aInput.length;       //在oGoods下共有几个input
+            var oOffGoods = document.getElementById("offSaleGoods");
+            var offGoodHtml = "";       //下架商品列表的HTML
+            var oPrice = document.getElementById("price");      //总价
+            for(var i=1; i<inputLen; i+=2){
+                aInput[i].index = i;
+                aInput[i].onclick = function () {
+                    var infoNum = (this.index-1)/2;
+                    var changeDd = aDd[infoNum];
+                    var locationleft = parseFloat(getStyle(changeDd,"left"));       //为了不让抖动的图偏离位置，人为先获取
+                    countDown(aInput[this.index-1].value,aP[infoNum], function () {
+                        shakeObj(changeDd,"left",locationleft,15, function () {
+                            changeObj(changeDd,"top",10,234);       //慢慢将商品下移
+                            changeObj(changeDd,"opacity",0.05,0, function () {      //慢慢将商品消失
+                                changeObj(changeDd,"top",200,34);       //快速将dd归位
+                                changeObj(changeDd,"opacity",1,1);      //快速将dd显示出来，由于定时器的异步性，所以以下部分代码会先执行
+                                offGoodHtml += "<li> <em>"+ arrGoodsInfo[infoNum].introduce +"</em> <span>"+ arrGoodsInfo[infoNum].price +"</span> <img src='"+ arrGoodsInfo[infoNum].url +"'/> </li>";
+                                oOffGoods.innerHTML = offGoodHtml;
+                                oPrice.innerHTML = Number(oPrice.innerHTML) + Number(arrGoodsInfo[infoNum].price.replace(/[^0-9]/ig,""));       //进行下架商品的价格累加，replace(/[^0-9]/ig,"")表示从字符串中找出数字部分
+                                changeDd.innerHTML = "<img src='img/offSale.jpg' style='width: 160px; height: 277px;'/>";
+                            });
+                        });
+                    });
+                }
+            }
+        }
+    </script>
+
+    <style>
+        li{ list-style:none;}
+        em{ font-style:normal;}
+        a{ text-decoration:none;}
+        table{ border-collapse:collapse;}
+        img{ border:0; vertical-align:top;}
+        textarea{ resize:none; overflow:hidden;}
+        body,h1,h2,h3,h4,h5,h6,form,textarea,select,input,dl,dd,ul,ol,th,td,p,pre{ margin:0; padding:0; font-size:12px; font-family:"楷体";}
+        /* CSS重置 */
+        
+        .wrap{
+            width: 646px;
+            margin: 0 auto;
+        }
+        .goods{
+            height: 311px;
+            position: relative;
+        }
+        .goods dt{
+            width: 646px;
+            height: 29px;
+            font-size: 21px;
+            color: #636b52;
+            line-height: 29px;
+            text-align: center;
+            border-bottom: 5px solid #3b5679;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .goods dd{
+            width: 160px;
+            border-left: 1px solid #000000;
+            border-right: 1px solid #000000;
+            position: absolute;
+            top: 34px;
+        }
+        .goods dd .future{
+            width: 115px;
+            height: 22px;
+            border: none;
+            background: #b7b7ba;
+            line-height: 22px;
+            position: absolute;
+            left: 5px;
+            top: 4px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+        }
+        .goods dd .begin{
+            width: 34px;
+            height: 18px;
+            color: #FFFFFF;
+            background: #b7b7ba;
+            cursor: pointer;
+            position: absolute;
+            left: 122px;
+            top: 6px;
+        }
+        .goods dd p{
+            width: 142px;
+            height: 14px;
+            font-size: 13px;
+            position: absolute;
+            left: 15px;
+            top: 42px;
+        }
+        .goods dd .pic{
+            width: 125px;
+            height: 125px;
+            position: absolute;
+            left: 18px;
+            top: 70px;
+        }
+        .goods dd em{
+            width: 141px;
+            height: 30px;
+            position: absolute;
+            left: 10px;
+            top: 221px;
+        }
+        .goods dd span{
+            width: 131px;
+            height: 13px;
+            color: red;
+            font-size: 13px;
+            position: absolute;
+            left: 10px;
+            top: 253px;
+        }
+        .wrap .title{
+            width: 646px;
+            height: 29px;
+            background: #3b5679;
+        }
+        .wrap .title p{
+            float: left;
+            height: 29px;
+            line-height: 29px;
+            color: #FFFFFF;
+            font-size: 21px;
+            margin: 0 70px;
+        }
+        .wrap .total{
+            height: 36px;
+            color: red;
+            font-size: 24px;
+            line-height: 36px;
+            margin: 10px 0;
+        }
+        .wrap .total div{
+            display: inline;
+        }
+        .wrap ul li{
+            height: 73px;
+            background: #3b5679;
+            margin: 5px 0;
+            position: relative;
+        }
+        .wrap ul li em{
+            width: 200px;
+            height: 73px;
+            color: #FFFFFF;
+            position: absolute;
+            left: 0;
+            top: 25px;
+        }
+        .wrap ul li span{
+            color: #FFFFFF;
+            line-height: 73px;
+            position: absolute;
+            left: 294px;
+            top: 0;
+        }
+        .wrap ul li img{
+            width: 75px;
+            height: 60px;
+            border: 1px solid orangered;
+            position: absolute;
+            left: 480px;
+            top: 6px;
+        }
+    </style>
+    
+</head>
+<body>
+
+<div class="wrap">
+    <dl class="goods" id="goods"></dl>
+    <div class="title">
+        <p>商品名称</p>
+        <p>价钱</p>
+        <p>商品图片</p>
+    </div>
+    <ul id="offSaleGoods"></ul>
+    <span class="total">您总共错失的商品的总价：<div id="price">0</div>元</span>
+</div>
+
+</body>
+</html>
