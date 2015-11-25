@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文字搬运工</title>
+
+    <script type="text/javascript" src="JimFnLibrary(1.1).js"></script>
+    <script>
+        window.onload = function () {
+            var oTextInput = document.getElementById("textInput");
+            var oRightShift = document.getElementById("rightShift");
+            var oTotalCount = document.getElementById("totalCount");
+            var oDisplayArea = document.getElementById("displayArea");
+            var oProgressBar = document.getElementById("progressBar");
+            var aLi = oProgressBar.getElementsByTagName("li");
+            var inputStr = "";
+            var arrDisplay = [];
+            var inputStrLen = 0;
+            var displayStrLen = 0;
+            var onOff = true;
+
+            oRightShift.onmouseover = function () {
+                this.classList.add("activeRightShift");
+            };
+
+            oRightShift.onmouseout = function () {
+                this.classList.remove("activeRightShift");
+            };
+
+            oRightShift.onclick = function () {
+                if(onOff){
+                    var _this = this;
+                    var i = 0;
+                    var inputLen = oTextInput.value.length;
+                    onOff = false;
+                    oDisplayArea.innerHTML = "";
+//                    clearInterval( _this.moveTimer );
+                    _this.moveTimer = setInterval(function () {
+                        changeObj(oRightShift,"opacity",0.1,0.3);
+                        changeObj(oProgressBar,"opacity",0.1,1);
+                        inputStr = oTextInput.value;        //文本域内的字符串
+                        inputStrLen = inputStr.length;        //文本域内文字的长度
+                        if(inputStrLen == 0){
+                            clearInterval( _this.moveTimer );
+                            changeObj(oRightShift,"opacity",0.05,1);
+                            changeObj(oProgressBar,"opacity",0.05,0);
+                            onOff = true;
+                        } else {
+                            arrDisplay = oDisplayArea.innerHTML.split("");        //显示区域的字符串数组
+                            displayStrLen = arrDisplay.push( inputStr.charAt(0) );      //把文本域的第一个字push给显示域的字符数组
+                            oDisplayArea.innerHTML = arrDisplay.join("");       //把显示域字符数组以空的形式连成字符串，并且显示在显示域
+
+                            oTotalCount.innerHTML = displayStrLen + "/" + inputLen;     //将计数域的数值实时改变
+
+                            oTextInput.value = inputStr.substring(1,inputStrLen);       //截取文本域除了第一个字符外的其他字符串，并且显示在文本域内
+
+                            if(i==0){
+                                aLi[7].classList.remove("active");
+                                aLi[0].classList.add("active");
+                            } else {
+                                aLi[i-1].classList.remove("active");
+                                aLi[i].classList.add("active");
+                            }
+                            i++;
+                            i%=8;
+                        }
+                    },50);
+                }
+            };
+        }
+    </script>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,ul,ol,dl,dd,form,input,select,textarea,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+        /* CSS重置 */
+
+        .wrap{
+            width: 800px;
+            height: 240px;
+            border: 10px solid #c0c0c0;
+            position: absolute;
+            left: 50%;
+            top: 15%;
+            margin-left: -400px;
+        }
+        .wrap .textInput,.wrap .displayArea{
+            width: 300px;
+            height: 190px;
+            padding: 15px 10px;
+            border: 1px dotted #4b7f8c;
+            font-size: 14px;
+            color: #FFFFFF;
+            position: absolute;
+            top: 11px;
+        }
+        .wrap .textInput{
+            background: yellowgreen;
+            left: 11px;
+        }
+        .wrap .totalCount,.wrap .rightShift{
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 18px;
+            position: absolute;
+            left: 340px;
+        }
+        .wrap .rightShift{
+            cursor: pointer;
+            background: orange;
+            color: #FFFFFF;
+            top: 11px;
+        }
+        .wrap .totalCount{
+            color: #000;
+            top: 55px;
+        }
+        .wrap .activeRightShift{
+            background: orangered;
+        }
+        .wrap .progressBar{
+            width: 80px;
+            height: 10px;
+            opacity: 0;
+            position: absolute;
+            left: 360px;
+            top: 200px;
+        }
+        .wrap .progressBar li{
+            width: 8px;
+            height: 10px;
+            background: orange;
+            float: left;
+            margin-right: 2px;
+        }
+        .wrap .progressBar li.active{
+            background: orangered;
+        }
+        .wrap .displayArea{
+            background: deepskyblue;
+            left: 467px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="wrap">
+    <textarea class="textInput" id="textInput">习近平强调，要坚持绿色办奥，提升全社会环保意识，加强环境治理和污染防控，把绿色发展理念贯穿筹办工作始终。坚持共享办奥，积极调动社会力量参与办奥，提高城市管理水平和社会文明程度，加快冰雪运动发展和普及，使广大人民群众受益。坚持开放办奥，借鉴北京奥运会和其他国家办赛经验，弘扬奥林匹克精神，加强中外体育交流，推动东西文明交融，展示中国良好形象。坚持廉洁办奥，严格预算管理，控制办奥成本，强化过程监督，让冬奥会像冰雪一样纯洁干净。要加强组织领导，统筹推进各项工作，确保把北京冬奥会办成一届精彩、非凡、卓越的奥运盛会。</textarea>
+    <span class="rightShift" id="rightShift">把文字右移</span>
+    <span class="totalCount" id="totalCount">0/0</span>
+    <ul class="progressBar" id="progressBar">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <p class="displayArea" id="displayArea"></p>
+</div>
+
+</body>
+</html>
