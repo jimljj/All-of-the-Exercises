@@ -1,0 +1,108 @@
+/**
+ * Created by Jimmy on 15/11/5.
+ */
+function getStyle(obj,attr){
+    //获取对象*的当前属性*
+    return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+}
+
+function changeObj(obj,attr,step,target,endFn){      //改变的对象*，属性*，步长*，目标值*，回调函数(打星的形参为必要的)
+    var timer = null;
+    timer = attr=="opacity" ? obj.disappearTimer : obj.changeTimer;
+
+    step = parseFloat(getStyle(obj,attr))<target ? step : -step;      //只需根据目标与当前位置值来判断step是正还是负,方便用户设置步长
+    clearInterval(timer);
+    timer = setInterval(function () {
+        var nowAttr = parseFloat(getStyle(obj,attr)) + step;
+        if( nowAttr>target && step>0 || nowAttr<target && step<0 ) {
+            nowAttr = target;
+        }
+        obj.style[attr] = attr=="opacity" ? nowAttr : nowAttr+"px";
+        if(nowAttr==target){
+            clearInterval( timer );
+            endFn && endFn();
+        }
+    },30);
+}
+
+function shakeObj(obj,direction,location,range,endFn){
+    //抖动的对象*，方向*，当前位置*，幅度*，回调函数(打星的形参为必要的，在外面获取当前位置是为了防止还没抖完就重新调用本函数，使初始位置发生偏离)
+    var arrMove = [];
+    var num = 0;
+
+    for(var i=range; i>0; i-=2){
+        arrMove.push(i,-i);
+    }
+    arrMove.push(0);
+    var len = arrMove.length;
+
+    clearInterval( obj.shakeTimer );
+    obj.shakeTimer = setInterval(function () {
+        obj.style[direction] = location + arrMove[num] + 'px';
+        num++;
+        if( num > len ){
+            clearInterval(obj.shakeTimer);
+            endFn && endFn();
+        }
+    },30);
+}
+
+function countDown(countDownObj,futureTimePoint,endFn){
+    //在哪个元素*上进行倒计时，未来的时间点*，回调函数(打星的形参为必要的)
+    var futureTime = new Date(futureTimePoint);
+    clearInterval(countDownObj.countDownTimer);
+    countDownObj.countDownTimer = setInterval(function () {
+        var nowTime = new Date();
+        var period = Math.floor( (futureTime-nowTime)/1000 );
+        if(period>=0){
+            var str = "剩余" + changeFormat(Math.floor(period/86400)) + "天" + changeFormat(Math.floor(period%86400/3600)) + "时" + changeFormat(Math.floor(period%86400%3600/60)) + "分" + changeFormat(period%60) + "秒";
+            countDownObj.innerHTML = str;
+        } else {
+            clearInterval( countDownObj.countDownTimer );
+            endFn && endFn();
+        }
+    },1000);
+}
+
+function changeFormat(num){     //将单位数字*改成双位字符串
+    return num<10 ? "0"+num : ""+num;
+}
+
+function noRepeatedRandomArray(arrRandom,randomLen,from_x,to_y){
+    //随机数组*，随机数组的长度*，随机数左定义域闭区间*，随机数右定义域闭区间*，回调函数
+    var nowRandomLen = 0;
+    for(; nowRandomLen<randomLen;){
+        for(var i=nowRandomLen; i<randomLen; i++){
+            arrRandom.splice( i,0,Math.round( Math.random()*(to_y-from_x)+from_x ) );
+        }
+        for(i=0; i<arrRandom.length; i++){
+            for(var j=i+1; j<arrRandom.length; j++){
+                if(arrRandom[i]==arrRandom[j]){
+                    arrRandom.splice( j,1 );
+                    j--;
+                }
+            }
+        }
+        nowRandomLen = arrRandom.length;
+    }
+    return arrRandom;
+}
+
+function indexOfStringArr(arr,targetStr,fromX){
+    //需要查找的数组*，需要查找的字符串*，从第几位开始查找*，仅限于字符串数组的查找
+    var indexArr = [];
+    for(var i=fromX; i<arr.length; i++){
+        if(arr[i].length==targetStr.length){
+            for(var j=0; j<targetStr.length; j++){
+                if( arr[i].charAt(j)==targetStr.charAt(j) ){
+                    if( j==targetStr.length-1 ){
+                        indexArr.push(i);
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+    return indexArr;
+}

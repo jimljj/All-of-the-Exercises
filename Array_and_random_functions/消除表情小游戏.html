@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>消除表情小游戏</title>
+
+    <script type="text/javascript" src="JimFnLibrary(1.2).js"></script>
+    <script>
+        window.onload = function () {
+            var oSwitch = document.getElementById("switch");
+            var oGameArea = document.getElementById("gameArea");
+            var oExpression = document.getElementById("expression");
+            var oLoseScore = document.getElementById("loseScore");
+            var oGetScore = document.getElementById("getScore");
+
+            var gameAreaTop = parseInt( getStyle(oGameArea,"top") );        //表示最初的游戏区域top值
+            var location = 0;       //表示oExpression的表情当下的left值
+            var step = 3;       //速度，这里用步长是为了契合changeObj这个函数
+            var expressionTop = 0;      //当下表情的top值
+            var onOff = true;       //保持表情只能被点击一次
+            var arrText = ["乌龟","步行","跑步","自行车","摩托车","轿车","飞机","光"];
+
+            function restart(){
+                onOff = true;
+                location = Math.round( Math.random()*840+30 );      //随机产生一个位置
+                oExpression.src = "img/" + Math.round( Math.random()*7+10 ) + ".jpg";
+                oExpression.style.left = location + "px";
+
+                oExpression.Timer = setInterval(function () {
+                    expressionTop = parseFloat(getStyle(oExpression,"top")) + step;     //接近当下的表情top值
+                    if(expressionTop>460){
+                        expressionTop = 460;
+                    }
+                    oExpression.style.top = expressionTop + "px";
+                    if(expressionTop==460){
+                        clearInterval( oExpression.Timer );
+                        oLoseScore.innerHTML++;
+
+                        if( Number(oLoseScore.innerHTML)<10 ){
+                            shakeObj(oGameArea,"top",gameAreaTop,20, function () {
+                                changeObj(oExpression,"top",500,-40, function () {
+                                    restart();
+                                });
+                            });
+                        } else {
+                            alert( "普通人能达到自行车的速度，而您的极限手速达到了【" + arrText[parseInt(step/4)] + "】的速度!" );
+                            oSwitch.value = "开始游戏";
+                            oSwitch.disabled = "";
+                            oLoseScore.innerHTML = "0";
+                            oGetScore.innerHTML = "0";
+                            step = 2;
+                            changeObj(oExpression,"top",500,-40);
+                        }
+                    }
+                },30);
+            }
+
+            oSwitch.onclick = function () {
+                this.value = "游戏正在进行中……";
+                this.disabled = "disabled";
+                restart();
+            };
+
+            oExpression.onclick = function () {
+                if(onOff){
+                    this.src = "img/9.jpg";
+                    onOff = false;
+                    clearInterval( oExpression.Timer );
+                    shakeObj(this,"left",location,10, function () {
+                        changeObj(oExpression,"top",500,-40, function () {
+                            restart();
+                        });
+                    });
+                    step+=3;
+                    oGetScore.innerHTML++;
+                }
+            }
+
+        }
+    </script>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,textarea,select,ul,ol,dl,dd,th,td,h1,h2,h3,h4,h5,h6,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+        /* CSS重置 */
+
+        body{
+            background: #eff7ef;
+        }
+        .gameName{
+            width: 300px;
+            height: 35px;
+            font-size: 25px;
+            font-weight: bold;
+            line-height: 35px;
+            text-align: center;
+            margin-left: -150px;
+            position: absolute;
+            left: 50%;
+            top: 4%;
+        }
+        .introduce,.explain{
+            width: 1000px;
+            height: 22px;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
+            margin-left: -500px;
+            position: absolute;
+            left: 50%;
+        }
+        .introduce{
+            top: 10%;
+        }
+        .switch{
+            width: 150px;
+            height: 30px;
+            font-size: 20px;
+            margin-left: -75px;
+            position: absolute;
+            left: 50%;
+            top: 15%;
+        }
+        .board{
+            width: 120px;
+            height: 60px;
+            border: 1px solid #3b888c;
+            background: lightgreen;
+            position: absolute;
+            left: 69px;
+            top: 25%;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .board .get,.board .lose{
+            width: 100px;
+            height: 24px;
+            color: dodgerblue;
+            font-size: 16px;
+            margin-left: -45px;
+            position: absolute;
+            left: 50%;
+        }
+        .board .get{
+            top: 20%;
+        }
+        .board .lose{
+            top: 55%;
+        }
+        .board .get .getScore,.board .lose .loseScore{
+            color: orangered;
+        }
+        .gameArea{
+            width: 900px;
+            height: 500px;
+            border: 1px solid #3b888c;
+            background: #FFFFFF;
+            margin-left: -450px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+        }
+        .gameArea img{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: -40px;
+        }
+        .explain{
+            top: 93%;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="gameName">测试你的极限手速有多快？</div>
+<p class="introduce">游戏说明：点击“开始游戏”，随机掉下QQ表情，点中它,千万别让它掉下去!丢失10个的时候,GameOver~</p>
+<input type="button" value="开始游戏" class="switch" id="switch"/>
+<div class="board">
+    <p class="get">得到：<span class="getScore" id="getScore">0</span>&nbsp;分</p>
+    <p class="lose">失丢：<span class="loseScore" id="loseScore">0</span>&nbsp;分</p>
+</div>
+<div class="gameArea" id="gameArea">
+    <img id="expression"/>
+</div>
+<p class="explain">极限手速有8档，从低到高分别为：乌龟，步行，跑步，自行车，摩托车，轿车，飞机，光。赶紧测测自己的极限手速吧~</p>
+
+</body>
+</html>

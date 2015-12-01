@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>排序与打乱</title>
+
+    <script type="text/javascript" src="JimFnLibrary(1.2).js"></script>
+    <script>
+        window.onload = function () {
+            var oContent = document.getElementById("content");
+            var oOrder = document.getElementById("order");
+            var oRandom = document.getElementById("random");
+            var aLi = oContent.getElementsByTagName("li");
+            var aImg = oContent.getElementsByTagName("img");
+            var aSpan = oContent.getElementsByTagName("span");
+            var len = aLi.length;
+
+            for(var i=0; i<len; i++){       //定位li
+                if(i<4){
+                    aLi[i].style.left = 302*i + "px";
+                } else {
+                    aLi[i].style.left = 302*(i-4) + "px";
+                    aLi[i].style.top = "245px";
+                }
+            }
+
+            var arrLiData = [
+                { url:"img/0.jpg", decoration:"120-水滴概念车"},
+                { url:"img/1.jpg", decoration:"423-动漫大魔王"},
+                { url:"img/2.jpg", decoration:"139-音乐与舞者"},
+                { url:"img/3.jpg", decoration:"343-爆炸蘑菇云"},
+                { url:"img/4.jpg", decoration:"520-运动潮牌集合"},
+                { url:"img/5.jpg", decoration:"266-性感韩国女星"},
+                { url:"img/6.jpg", decoration:"75-梅西进球庆祝"},
+                { url:"img/7.jpg", decoration:"87-战地3"}
+            ];
+            var onOff = true;
+            var arrRandomNum = [];      //此数组为产生随机数的数组
+            var arrDecoration = [];     //此数组为arrLiData内decoration数字的排序
+            var arrNowDec = [];     //此数组为当前span里decoration数字的排序
+
+            //初始化
+            for(i=0; i<len; i++){
+                aImg[i].src = arrLiData[i].url;
+                aSpan[i].innerHTML = arrLiData[i].decoration;
+                arrNowDec.push( parseInt(arrLiData[i].decoration) );
+                aLi[i].onmouseover = function () {
+                    this.style.opacity = "1";
+                };
+                aLi[i].onmouseout = function () {
+                    this.style.opacity = "0.6";
+                }
+            }
+            //arrDecoration = arrRandomNum;       //此处=为引用赋值，而不是值赋值。引用赋值，在内存里指向同一区域
+            arrDecoration = arrDecoration.concat(arrNowDec);
+            //concat该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本，除非像上面一样进行值赋值
+
+            oOrder.onclick = function () {
+                if(onOff){
+                    arrNowDec.sort(function (a, b) {      //正序
+                        return a-b;
+                    });
+                    oOrder.innerHTML = "从大到小";
+                    onOff = false;
+                } else {
+                    arrNowDec.sort(function (a, b) {        //倒序
+                        return b-a;
+                    });
+                    oOrder.innerHTML = "从小到大";
+                    onOff = true;
+                }
+                for(j=0; j<len; j++){
+                    for(var k=0; k<len; k++){
+                        if(arrNowDec[j]===arrDecoration[k]){
+                            aImg[j].src = arrLiData[k].url;
+                            aSpan[j].innerHTML = arrLiData[k].decoration;
+                            break;
+                        }
+                    }
+                }
+            };
+
+            oRandom.onclick = function () {
+                noRepeatedRandomArray(arrRandomNum,8,0,7);
+                for(var j=0; j<len; j++){
+                    aImg[j].src = arrLiData[arrRandomNum[j]].url;
+                    aSpan[j].innerHTML = arrLiData[arrRandomNum[j]].decoration;
+                }
+            };
+
+        }
+    </script>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,ul,ol,dl,dd,form,input,textarea,select,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+        /* CSS重置 */
+
+        body{
+            background: #f1f1f1;
+        }
+        .wrap{
+            width: 1208px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .wrap .order,.wrap .random{
+            width: 116px;
+            height: 36px;
+            background: #009999;
+            border: 1px solid #9c9c9c;
+            color: #FFFFFF;
+            font-size: 18px;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            position: absolute;
+            top: 30px;
+        }
+        .wrap .order{
+            left: 480px;
+        }
+        .wrap .random{
+            left: 610px;
+        }
+        .wrap .content{
+            position: absolute;
+            top: 88px;
+        }
+        .wrap .content li{
+            width: 300px;
+            height: 243px;
+            background: #FFFFFF;
+            margin: 0 2px 2px 0;
+            opacity: 0.6;
+            position: absolute;
+        }
+        .wrap .content li img{
+            width: 280px;
+            height: 180px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+        }
+        .wrap .content li span{
+            width: 280px;
+            height: 43px;
+            background: #f1f1f1;
+            color: #006699;
+            line-height: 43px;
+            text-align: center;
+            font-size: 19px;
+            position: absolute;
+            left: 10px;
+            top: 190px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="wrap">
+    <span class="order" id="order">从小到大</span>
+    <span class="random" id="random">随机打乱</span>
+    <ul class="content" id="content">
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+        <li>
+            <img/>
+            <span></span>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
