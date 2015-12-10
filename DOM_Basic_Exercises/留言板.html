@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+        /* CSS重置 */
+        
+        body{
+            background: #f6e6b3;
+        }
+        .wrap{
+            width: 800px;
+            height: 600px;
+            border: 5px solid #e8d088;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -400px;
+            margin-top: -300px;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+        }
+        .wrap .background{
+            width: 800px;
+            height: 600px;
+            -webkit-border-radius: 25px;
+            -moz-border-radius: 25px;
+            border-radius: 25px;
+        }
+        .wrap .messageEdit{
+            width: 400px;
+            height: 100px;
+            font-size: 20px;
+            border: 2px solid #d1b763;
+            position: absolute;
+            left: 225px;
+            top: 50px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .wrap .confirm,.wrap .delete{
+            height: 25px;
+            font-size: 17px;
+            border: 2px solid lightgrey;
+            background: #ffffee;
+            color: grey;
+            position: absolute;
+            left: 650px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        .wrap .confirm{
+            width: 60px;
+            left: 655px;
+            top: 95px;
+        }
+        .wrap .delete{
+            width: 90px;
+            left: 640px;
+            top: 129px;
+        }
+        .wrap .messageBoard{
+            width: 450px;
+            height: 300px;
+            border: 3px solid #dab253;
+            padding: 25px;
+            overflow: scroll;
+            position: absolute;
+            left: 225px;
+            top: 170px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+        }
+        .wrap .messageBoard li{
+            width: 450px;
+            color: #FFFFFF;
+            font-size: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .wrap .messageBoard li.active{
+            background: orangered;
+        }
+        .wrap .introduce{
+            width: 306px;
+            height: 30px;
+            font-size: 14px;
+            line-height: 30px;
+            text-align: center;
+            color: #FFFFFF;
+            padding: 0 100px;
+            position: absolute;
+            top: 525px;
+            left: 225px;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oEdit = document.getElementById("messageEdit");
+            var oConfirm = document.getElementById("confirm");
+            var oDelete = document.getElementById("delete");
+            var oBoard = document.getElementById("messageBoard");
+            var i = 0;      //i表示当前要留言的是第几条
+
+            oConfirm.onclick = function () {
+                var oLi = document.createElement("li");
+
+                oLi.innerHTML = oEdit.value;
+                oLi.onOff = false;
+                oEdit.value = "";
+
+                if(oBoard.children[0]){     //兼容IE
+                    oBoard.insertBefore(oLi,oBoard.children[0]);
+                } else {
+                    oBoard.appendChild(oLi);
+                }
+                i++;
+
+                if(i==6){       //保证留言只有5条，删除最末尾的那一条
+                    oBoard.removeChild(oBoard.children[5]);
+                    i=5;
+                }
+
+                oLi.onclick = function () {
+                    if(this.onOff){     //该条已经被选中了
+                        this.classList.remove("active");
+                        this.onOff = false;
+                    } else {        //该条还未被选中
+                        this.classList.add("active");
+                        this.onOff = true;
+                    }
+                }
+            };
+
+            oDelete.onclick = function () {
+                var aDeleteLi = oBoard.querySelectorAll(".active");
+                var len = aDeleteLi.length;
+
+                if(len==0){
+                    alert("对不起，您未选择任何要删除的留言，我无法为您做批量删除的服务。");
+                } else {
+                    for(var j=0; j<len; j++){
+                        oBoard.removeChild(aDeleteLi[j]);       //删除这些选中的li
+                    }
+                    i-=len;
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div class="wrap">
+    <img src="img/paperBg.jpg" class="background"/>
+    <textarea class="messageEdit" id="messageEdit" placeholder="请在此处编辑你的留言,点击留言后，会在下面的留言框显示……"></textarea>
+    <input type="button" value="留言" class="confirm" id="confirm"/>
+    <input type="button" value="批量删除" class="delete" id="delete"/>
+    <ul class="messageBoard" id="messageBoard"></ul>
+    <p class="introduce">留言只准留5条。若要批量删除，直接选中要删除的留言，然后点击批量删除，即可。</p>
+</div>
+
+</body>
+</html>
