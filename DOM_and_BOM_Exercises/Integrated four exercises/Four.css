@@ -1,0 +1,169 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,textarea,select,h1,h2,h3,h4,h5,h6,ul,ol,dl,dd,th,td,p,pre{ margin: 0; padding: 0; font-size:16px; font-family:"楷体";}
+/* CSS重置 */
+
+body{
+    height: 1410px;
+}
+.title{
+    width: 200px;
+    height: 30px;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: deepskyblue;
+    position: absolute;
+    left:50%;
+    margin-left: -100px;
+}
+
+/*关键字提示区*/
+.keyWordContent{
+    width: 780px;
+    height: 180px;
+    padding: 10px;
+    background: lightgrey;
+    border: 1px solid gray;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    margin-left: -400px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;;
+}
+.keyWordContent .content{
+    line-height: 24px;
+    position: absolute;
+    top: 25%;
+}
+.keyWordContent .content a{
+    color: limegreen;
+    cursor: pointer;
+}
+.keyWordContent .content span{
+    line-height: 24px;
+    font-size: 16px;
+    padding: 0 10px;
+    border: 1px solid #6aa8c1;
+    background: #ffffee;
+    color: orangered;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/*选择筛选区*/
+.selectContent{
+    width: 780px;
+    height: 380px;
+    padding: 10px;
+    background: lightgray;
+    border: 1px solid gray;
+    margin-left: -400px;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+.selectContent .district,.selectContent .job,.selectContent .salary{
+    width: 130px;
+    position: absolute;
+    left: 15%;
+}
+.selectContent .district{
+    top: 15%;
+}
+.selectContent .job{
+    top: 42%;
+}
+.selectContent .salary{
+    top: 69%;
+}
+.selectContent dd{
+    width: 80px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: 5px;
+    text-align: center;
+    float: right;
+    cursor: pointer;
+    color: white;
+    background: darkgray;
+    border: 2px solid gray;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.selectContent .demand{
+    height: 30px;
+    line-height: 30px;
+    /*text-align: center;*/
+    font-size: 20px;
+    color: orangered;
+    background: white;
+    border: 2px solid gray;
+    padding: 10px;
+    margin-top: -15px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.selectContent .demand div{
+    float: left;
+    margin: 0 5px;
+}
+.selectContent .introduce{
+    height: 14px;
+    line-height: 14px;
+    font-size: 12px;
+    color: orangered;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+}
+
+/*固定广告区*/
+.adsLeft,.adsRight{
+    width: 80px;
+    height: 300px;
+    padding: 0 10px;
+    background: orangered;
+    color: white;
+    line-height: 300px;
+    /*position: fixed;  其实把position改成这句就够了,完全不用JS*/
+    position: absolute;
+    top: 202px;
+}
+.adsLeft{
+    left: 0;
+}
+.adsRight{
+    right: 0;
+}
+
+/*回到顶部*/
+.returnTop{
+    width: 200px;
+    height: 50px;
+    background: orangered;
+    font-size: 30px;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+    cursor: pointer;
+    margin-left: -100px;
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+}
