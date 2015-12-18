@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>simulateSelect</title>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ marign: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+        /*CSS重置*/
+
+        .display{
+            width: 280px;
+            height: 30px;
+            border: 1px solid orangered;
+            font-size: 16px;
+            line-height: 30px;
+            padding: 0 10px;
+            color: orangered;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .select{
+            width: 300px;
+            border: 1px solid orangered;
+            display: none;
+            position: absolute;
+            top: 30px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .select li{
+            height: 30px;
+            font-size: 20px;
+            line-height: 30px;
+            padding: 0 30px;
+            cursor: pointer;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+        }
+        .select li.active{
+            background: orangered;
+            color: white;
+        }
+        .introduce{
+            width: 300px;
+            border: 1px solid orangered;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 20px;
+            color: orangered;
+            position: absolute;
+            left: 320px;
+            top: 8px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oDisplay = document.getElementById("display");
+            var oSelect = document.getElementById("select");
+            var aLi = oSelect.getElementsByTagName("li");
+            var liLen = aLi.length;
+            var arrSelected = [];
+            var selectLen = 0;
+
+            oDisplay.onclick = function (e) {
+                oSelect.style.display = "block";
+                e.cancelBubble = true;      //阻止冒泡
+            };
+
+            document.onclick = function () {
+                oSelect.style.display = "none";
+            };
+
+            for(var i=0; i<liLen; i++){
+                aLi[i].onOff = false;        //表示当前项还未选中
+
+                aLi[i].onmouseover = function () {
+                    this.classList.add("active");
+                };
+
+                aLi[i].onmouseout = function () {
+                    if( !this.onOff ){        //若当前项未被选中
+                        this.classList.remove("active");
+                    }
+                };
+
+                aLi[i].onclick = function (e) {
+                    if( this.onOff ){       //该项已经被选中
+                        this.classList.remove("active");
+                        arrSelected = oDisplay.innerHTML.split(" ");        //以空格将现有选项分开,并存入数组中
+                        selectLen = arrSelected.length;
+                        for( j=0; j<selectLen; j++){        //删除此选项
+                            if( arrSelected[j] == this.innerHTML ){
+                                arrSelected.splice( j, 1);
+                                break;
+                            }
+                        }
+                        oDisplay.innerHTML = arrSelected.join(" ");
+                        if( selectLen > 2 ){        //当现有选项不止一个时,阻止冒泡
+                            e.cancelBubble = true;
+                        }
+                    } else {        //该选项还未被选中
+                        if( e.ctrlKey || e.shiftKey ){      //多选
+                            this.classList.add("active");
+                            oDisplay.innerHTML += this.innerHTML + " ";
+                            e.cancelBubble = true;
+                        } else {        //单选
+                            for( var j=0; j<liLen; j++){
+                                aLi[j].classList.remove("active");
+                                aLi[j].onOff = false;
+                            }
+                            this.classList.add("active");
+                            oDisplay.innerHTML = this.innerHTML + " ";
+                        }
+                    }
+                    this.onOff = !this.onOff;
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="display" class="display"></div>
+<ul id="select" class="select">
+    <li>楷体</li>
+    <li>魏体</li>
+    <li>华文彩云</li>
+    <li>微软雅黑</li>
+    <li>黑体</li>
+    <li>宋体</li>
+</ul>
+<span id="introduce" class="introduce">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击左边的文本框,会弹出下拉列表.点击页面其他任何地方可以收起下拉列表.点击选项,可以添加选项,再次点击同一选项,可以删除该选项.按住shift或者ctrl,可以进行多选的添加与删除.不按住shift或者ctrl,如果当前文本框内已经多选了,则也可以删除.</span>
+
+</body>
+</html>
