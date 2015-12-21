@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DrawBoxWithMouse</title>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 14px; font-family: Cursive;}
+        /* CSS重置 */
+
+        .wrap{
+            width: 500px;
+            height: 500px;
+            border: 5px solid lightgray;
+            color: darkorange;
+            text-align: center;
+            cursor: pointer;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -250px;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;;
+        }
+        .wrap div{
+            border: 1px solid greenyellow;
+            position: absolute;
+            -webkit-border-radius: 25px;
+            -moz-border-radius: 25px;
+            border-radius: 25px;;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oWrap = document.getElementById("wrap");
+            var R = oWrap.offsetLeft+oWrap.offsetWidth-12;      //12 = oWrap的边框和 + oDiv的边框和
+            var B = oWrap.offsetTop+oWrap.offsetHeight-12;
+
+            oWrap.onmousedown = function (e) {
+                var mouseX = e.clientX;
+                var mouseY = e.clientY;
+                var oDiv = document.createElement("div");
+                oDiv.style.left = e.clientX-oWrap.offsetLeft + "px";
+                oDiv.style.top = e.clientY-oWrap.offsetTop + "px";
+                oWrap.appendChild(oDiv);
+
+                document.onmousemove = function (e) {
+                    var nowMouseX = e.clientX;
+                    var nowMouseY = e.clientY;
+                    if( nowMouseX > R ){
+                        nowMouseX = R;
+                    }
+                    if( nowMouseY > B ){
+                        nowMouseY = B;
+                    }
+                    oDiv.style.width = nowMouseX-mouseX + "px";
+                    oDiv.style.height = nowMouseY-mouseY + "px";
+                };
+
+                document.onmouseup = function () {
+                    document.onmousemove = document.onmouseup = null;
+                };
+
+                return false;
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="wrap" class="wrap">Draw the box with the mouse in here.</div>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>simulateScrollBar</title>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,textarea,select,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 16px; font-family: "楷体";}
+        /* CSS重置 */
+
+        .scrollArea{
+            width: 20px;
+            height: 500px;
+            background: lightgray;
+            position: absolute;
+            left: 30%;
+            top: 100px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;;
+        }
+        .scrollArea .scrollBar{
+            width: 20px;
+            height: 20px;
+            background: darkgray;
+            cursor: pointer;
+            position: absolute;
+            left: 0;
+            top: 0;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .wrap{
+            width: 470px;
+            height: 470px;
+            padding: 10px;
+            border: 5px solid lightgray;
+            overflow: hidden;
+            position: absolute;
+            left: 32%;
+            top: 100px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+        }
+        .wrap .content{
+            width: 470px;
+            position: absolute;
+            left: 10px;
+            top: 0;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+            var oBar = document.getElementById("scrollBar");
+            var oArea = document.getElementById("scrollArea");
+            var oWrap = document.getElementById("wrap");
+            var oContent = document.getElementById("content");
+
+            var scrollContentDis = oWrap.clientHeight-oContent.offsetHeight;        //内容可滚动的距离
+
+            if( scrollContentDis>0 || scrollContentDis==0 ){
+                oBar.style.height = "500px";
+            } else {
+                oBar.style.height = -50000/scrollContentDis + "px";
+            }
+
+            oBar.onmousedown = function (e) {
+                var barY = e.clientY-this.offsetTop;        //鼠标点击滚动条时,鼠标距离滚动条上边沿的距离
+
+                document.onmousemove = function (e) {
+                    var top = e.clientY-barY;       //鼠标移动时,bar距离可视区顶部的距离
+
+                    var scrollDis = oArea.offsetHeight-oBar.offsetHeight;       //滚动条可移动的距离
+                    if( top<0 ){
+                        top = 0;
+                    }
+                    if( top>scrollDis ){
+                        top = scrollDis;
+                    }
+                    oBar.style.top = top + "px";
+
+                    oContent.style.top = scrollContentDis*top/scrollDis + "px";
+                };
+
+                document.onmouseup = function () {
+                    document.onmouseup = document.onmousemove = null;
+                };
+
+                return false;
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="scrollArea" class="scrollArea">
+    <div id="scrollBar" class="scrollBar"></div>
+</div>
+
+<div id="wrap" class="wrap">
+    <div id="content" class="content">
+        Skip to main content
+        Select language
+        Skip to search
+        mozilla
+        Mozilla Developer Network
+        Sign in with
+        WEB PLATFORM MOZILLA DOCS DEVELOPER TOOLSDEMOSFEEDBACK
+        Search
+        SEARCH
+        SEARCH
+        LANGUAGES  EDIT  ADVANCED
+        MDN
+
+        Web technology for developers
+
+        Web APIs
+
+        Document
+        Document.getElementsByClassName()
+        Document.getElementsByClassName()
+
+        by 29 contributors:  teoli   Alexsey   teemu   BobHensley   JoshStrobl   onei   Daniel Hug   Dev   WP-Makyen   Sheppy   kscarfone   Khodaidad_Basharmand   BrianDiPalma   Show all…
+        IN THIS ARTICLE
+        Syntax
+        Examples
+        Browser compatibility
+        Specification
+        Returns an array-like object of all child elements which have all of the given class names. When called on the document object, the complete document is searched, including the root node. You may also call getElementsByClassName() on any element; it will return only elements which are descendants of the specified root element with the given class names.
+
+        SyntaxEDIT
+        var elements = document.getElementsByClassName(names); // or:
+        var elements = rootElement.getElementsByClassName(names);
+        elements is a live HTMLCollection of found elements.
+        names is a string representing the list of class names to match; class names are separated by whitespace
+        getElementsByClassName can be called on any element, not only on the document. The element on which it is called will be used as the root of the search.
+        ExamplesEDIT
+        Get all elements that have a class of 'test'
+
+        document.getElementsByClassName('test');
+        Get all elements that have both the 'red' and 'test' classes
+
+        document.getElementsByClassName('red test');
+        Get all elements that have a class of 'test', inside of an element that has the ID of 'main'
+
+        document.getElementById('main').getElementsByClassName('test');
+        We can also use methods of Array.prototype on any HTMLCollection by passing the HTMLCollection as the method's this value. Here we'll find all div elements that have a class of 'test':
+
+        var testElements = document.getElementsByClassName('test');
+        var testDivs = Array.prototype.filter.call(testElements, function(testElement){
+        return testElement.nodeName === 'DIV';
+        });
+        Browser compatibilityEDIT
+        Desktop Mobile
+        Feature	Chrome	Firefox (Gecko)	Internet Explorer	Opera	Safari
+        Basic support	(Yes)	3.0	9.0	(Yes)	(Yes)
+        SpecificationEDIT
+        W3C: getElementsByClassName
+        Share: Twitter Facebook Google+
+        Document Tags and Contributors
+        Tags:  API DOM DOM Element Methods Gecko Gecko DOM Reference HTML5 Method Reference Référence
+        Contributors to this page: teoli, Alexsey, teemu, BobHensley, JoshStrobl, onei, Daniel Hug, Dev, WP-Makyen, Sheppy, kscarfone, Khodaidad_Basharmand, BrianDiPalma, MTonly, mattbasta, shufenghua, ryan953, ethertank, Marcoos, Joneff, Brettz9, Bzbarsky, Johnjbarton, Randall Farmer, Mgjbot, BenoitL, Nickolay, Mw22, Jresig
+        Last updated by: teoli, Sep 26, 2015, 3:47:04 AM
+        HIDE SIDEBAR
+        SEE ALSO
+        Document Object Model
+        Document
+        Properties
+        Document.activeElement
+        Document.alinkColor
+        Document.anchors
+        Document.applets
+        Document.async
+        Document.bgColor
+        Document.body
+        Document.characterSet
+        ParentNode.childElementCount
+        ParentNode.children
+        Document.compatMode
+        Document.contentType
+        Document.currentScript
+        Document.defaultView
+        Document.designMode
+        Document.dir
+        Document.doctype
+        Document.documentElement
+        Document.documentURI
+        Document.documentURIObject
+        Document.domain
+        Document.domConfig
+        Document.embeds
+        Document.fgColor
+        ParentNode.firstElementChild
+        Document.forms
+        Document.head
+        Document.height
+        Document.images
+        Document.implementation
+        Document.inputEncoding
+        ParentNode.lastElementChild
+        Document.lastModified
+        Document.lastStyleSheetSet
+        Document.linkColor
+        Document.links
+        Document.location
+        Document.mozFullScreen
+        Document.mozFullScreenElement
+        Document.mozFullScreenEnabled
+        Document.mozSyntheticDocument
+        GlobalEventHandlers.onabort
+        Document.onafterscriptexecute
+        Document.onbeforescriptexecute
+        GlobalEventHandlers.onblur
+        GlobalEventHandlers.onchange
+        GlobalEventHandlers.onclick
+        GlobalEventHandlers.onclose
+        GlobalEventHandlers.oncontextmenu
+        GlobalEventHandlers.ondblclick
+        GlobalEventHandlers.onerror
+        GlobalEventHandlers.onfocus
+        GlobalEventHandlers.oninput
+        GlobalEventHandlers.onkeydown
+        GlobalEventHandlers.onkeypress
+        GlobalEventHandlers.onkeyup
+        GlobalEventHandlers.onload
+        GlobalEventHandlers.onmousedown
+        GlobalEventHandlers.onmousemove
+        GlobalEventHandlers.onmouseout
+        GlobalEventHandlers.onmouseover
+        GlobalEventHandlers.onmouseup
+        Document.onoffline
+        Document.ononline
+        GlobalEventHandlers.onreset
+        GlobalEventHandlers.onresize
+        GlobalEventHandlers.onscroll
+        GlobalEventHandlers.onselect
+        GlobalEventHandlers.onsubmit
+        Document.origin
+        Document.plugins
+        Document.pointerLockElement
+        Document.popupNode
+        Document.preferredStyleSheetSet
+        Document.readyState
+        Document.referrer
+        Document.scripts
+        Document.scrollingElement
+        Document.selectedStyleSheetSet
+        Document.styleSheets
+        Document.styleSheetSets
+        Document.title
+        Document.tooltipNode
+        Document.URL
+        Document.vlinkColor
+        Document.width
+        Document.xmlEncoding
+        Document.xmlVersion
+        Methods
+        Document.adoptNode()
+        Document.caretPositionFromPoint()
+        Document.caretRangeFromPoint()
+        Document.clear()
+        Document.close()
+        Document.createAttribute()
+        Document.createCDATASection()
+        Document.createComment()
+        Document.createDocumentFragment()
+        Document.createElement()
+        Document.createElementNS()
+        Document.createEntityReference()
+        Document.createEvent()
+        Document.createExpression()
+        Document.createNodeIterator()
+        Document.createNSResolver()
+        Document.createProcessingInstruction()
+        Document.createRange()
+        Document.createTextNode()
+        Document.createTouch()
+        Document.createTouchList()
+        Document.createTreeWalker()
+        Document.elementFromPoint()
+        Document.enableStyleSheetsForSet()
+        Document.evaluate()
+        Document.execCommand()
+        Document.exitPointerLock()
+        Document.getBoxObjectFor()
+        Document.getElementById()
+        Document.getElementsByClassName()
+        Document.getElementsByName()
+        Document.getElementsByTagName()
+        Document.getElementsByTagNameNS()
+        Document.getSelection()
+        Document.hasFocus()
+        Document.importNode()
+        Document.loadOverlay()
+        Document.mozCancelFullScreen()
+        Document.mozSetImageElement()
+        Document.open()
+        Document.queryCommandSupported()
+        Document.querySelector()
+        Document.querySelectorAll()
+        Document.registerElement()
+        Document.releaseCapture()
+        Document.write()
+        Document.writeln()
+        Inheritance:
+        Node
+        EventTarget
+        Related pages for DOM
+        Attr
+        ByteString
+        CDATASection
+        CharacterData
+        ChildNode
+        Comment
+        CustomEvent
+        DOMConfiguration
+        DOMError
+        DOMErrorHandler
+        DOMException
+        DOMImplementation
+        DOMImplementationList
+        DOMImplementationRegistry
+        DOMImplementationSource
+        DOMLocator
+        DOMObject
+        DOMParser
+        DOMPoint
+        DOMRect
+        DOMString
+        DOMTimeStamp
+        DOMTokenList
+        DOMUserData
+        DocumentFragment
+        DocumentType
+        Element
+        ElementTraversal
+        Entity
+        EntityReference
+        Event
+        EventTarget
+        HTMLCollection
+        MutationObserver
+        Node
+        NodeFilter
+        NodeIterator
+        NodeList
+        NonDocumentTypeChildNode
+        ProcessingInstruction
+        PromiseResolver
+        Range
+        Selection
+        Text
+        TextDecoder
+        TextEncoder
+        TimeRanges
+        TreeWalker
+        TypeInfo
+        USVString
+        UserDataHandler
+        XMLDocument
+        © 2005-2015 Mozilla Developer Network and individual contributors.
+        Content is available under these licenses.
+        About MDNTermsPrivacyCookiesContribute to the code
+        Other languages:
+    </div>
+</div>
+
+</body>
+</html>
