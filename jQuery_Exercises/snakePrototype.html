@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>snakePrototype</title>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 20px; font-family: Calibri}
+        /*CSS Reset*/
+
+        li{
+            width: 50px;
+            height: 50px;
+            background: orangered;
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            position: absolute;
+            top: 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+    <script>
+        $(function () {
+            var upDownOnoff = true;     //接下去是否只能进行向上或向下
+            var arr = [];
+            var dir = 2;        //蛇的方向,0表示向左,1表示向上,2表示向右,3表示向下,初始蛇的方向向右
+            var oSnakeHead = $('li:eq(0)');
+
+            $('li').each(function () {      //给每个li初始化位置
+                $(this).css( 'left', 55*( $('li').size()-$(this).index() ));
+                arr.unshift({ left:$(this).offset().left, top:$(this).offset().top});      //数组的最后是蛇头的位置
+            });
+
+            function locateLi(){
+                $('li').each(function () {
+                    $(this).css({ left:arr[9-$(this).index()].left, top:arr[9-$(this).index()].top});
+                });
+            }
+
+            setInterval(function () {
+                $(document).keyup(function (e) {
+                    if( e.which==37 && !upDownOnoff ){
+                        dir = 0;
+                        upDownOnoff = true;
+                    }
+                    if( e.which==38 && upDownOnoff ){
+                        dir = 1;
+                        upDownOnoff = false;
+                    }
+                    if( e.which==39 && !upDownOnoff ){
+                        dir = 2;
+                        upDownOnoff = true;
+                    }
+                    if( e.which==40 && upDownOnoff ){
+                        dir = 3;
+                        upDownOnoff = false;
+                    }
+                });
+
+                switch(dir){        //保存最新的蛇头信息
+                    case 0:
+                        arr.push({ left:oSnakeHead.offset().left-55, top:oSnakeHead.offset().top});
+                        break;
+                    case 1:
+                        arr.push({ left:oSnakeHead.offset().left, top:oSnakeHead.eq(0).offset().top-55});
+                        break;
+                    case 2:
+                        arr.push({ left:oSnakeHead.offset().left+55, top:oSnakeHead.offset().top});
+                        break;
+                    case 3:
+                        arr.push({ left:oSnakeHead.offset().left, top:oSnakeHead.offset().top+55});
+                        break;
+                    default:
+                        arr.push({ left:oSnakeHead.offset().left+55, top:oSnakeHead.offset().top});
+                }
+                arr.shift();
+                locateLi();
+            }, 500);
+        });
+    </script>
+
+</head>
+<body>
+
+<ul>
+    <li>0</li>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+</ul>
+
+</body>
+</html>

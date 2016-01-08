@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dragToGrid</title>
+
+    <style>
+        li{ list-style: none;}
+        em{ font-style: normal;}
+        a{ text-decoration: none;}
+        table{ border-collapse: collapse;}
+        img{ border: 0; vertical-align: top;}
+        textarea{ resize: none; overflow: auto;}
+        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 20px; font-family: Calibri}
+        /*CSS Reset*/
+
+        .wrap{
+            width: 700px;
+            height: 700px;
+            position: relative;
+        }
+        .wrap div{
+            width: 98px;
+            height: 98px;
+            border: 1px solid #000000;
+            position: absolute;
+        }
+        .drag{
+            width: 98px;
+            height: 98px;
+            background: orangered;
+            cursor: pointer;
+            position: absolute;
+            left: 1px;
+            top: 1px;
+        }
+    </style>
+
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+    <script>
+        $(function () {
+            var disX = 0;
+            var disY = 0;
+            var divLeft = 0;
+            var divTop = 0;
+
+            for( var i=0; i<49; i++){
+                $('<div>').appendTo( $('.wrap') ).css({ left:i%7*100, top:Math.floor(i/7)*100});
+            }
+
+            $('.drag').on( 'mousedown', function (e) {
+                disX = e.pageX-$(this).offset().left;
+                disY = e.pageY-$(this).offset().top;
+
+                $(document).on( 'mousemove', function (e) {
+                    divLeft = e.pageX-disX;
+                    divTop = e.pageY-disY;
+                    $('.drag').css({ left: divLeft, top: divTop});
+                });
+
+                $(document).on( 'mouseup', function () {
+                    if( divLeft%100<=50 ){
+                        divLeft = Math.floor(divLeft/100)*100+1;
+                    } else {
+                        divLeft = Math.ceil(divLeft/100)*100+1;
+                    }
+
+                    if( divTop%100<=50 ){
+                        divTop = Math.floor(divTop/100)*100+1;
+                    } else {
+                        divTop = Math.ceil(divTop/100)*100+1;
+                    }
+
+                    $('.drag').css({ left: divLeft, top: divTop});
+
+                    $(document).off();
+                });
+
+                return false;
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="wrap"></div>
+<div class="drag"></div>
+
+</body>
+</html>
