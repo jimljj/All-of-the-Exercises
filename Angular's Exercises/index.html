@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Jimmy's Yard Sale</title>
+
+    <link href="CSS/style.css" rel="stylesheet">
+
+    <script src="JS/angular.min.js"></script>
+    <script src="JS/viewModel.js"></script>
+
+</head>
+<body>
+
+<div id="container" ng-controller="List">
+    <div id="nav" class="clear">
+        <div class="header clear">
+            <h1>Jimmy's Yard Sale</h1>
+        </div>
+        <ul class="options clear">
+            <li>Home</li>
+            <li>Shopping Cart</li>
+        </ul>
+        <div class="total">合计为:¥<span> {{total}} </span>元</div>
+        <div class="search">
+            <input type="text">
+            <input type="button" value="Search">
+        </div>
+    </div>
+
+    <div id="main">
+        <ul>
+            <li class="clear" ng-include="'Template/listTemplate.html'" ng-repeat="obj in arrGoodsInfo"></li>
+        </ul>
+    </div>
+
+    <div id="footer">
+        <div class="information">
+            <div class="author">Jimmy's yard sale © 2016</div>
+            <div class="technique">Powered by Angular.js</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<img src="{{obj.url}}">
+<p>{{obj.introduce}}</p>
+<div class="unit">
+    促销价:¥<span>{{obj.price}}</span>元
+</div>
+<div class="number">
+    <input type="button" value="-" ng-click="decrease(obj)">
+    <span>{{obj.number}}</span>
+    <input type="button" value="+" ng-click="increase(obj)">
+</div>
+<div class="figure">
+    总价:¥<span>{{obj.total}}</span>元
+</div>

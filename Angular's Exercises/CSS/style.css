@@ -1,0 +1,176 @@
+/* CSS Reset Start */
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+html,body,form,input,select,textarea,h1,h2,h3,h4,h5,h6,ul,ol,dl,dd,th,td,p,pre{ margin: 0; padding: 0; font-size: 16px; font-family: "Arial Hebrew Scholar";}
+/* CSS Reset End */
+
+
+/* clearFloat Start */
+.clear{ zoom: 1;}
+.clear:after{ content: ""; display: block; clear: both;}
+/* clearFloat End */
+
+
+/* container's Style Start */
+html,body{ height: 100%;}
+#container{
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+/* container's Style End */
+
+
+/* nav's Public Style Start */
+#nav .header,#nav .header h1,#nav .options,#nav .options li,#nav .total{
+    float: left;
+}
+#nav .header h1,#nav .options li,#nav .total{
+    color: white;
+}
+#nav .options,#nav .search,#nav .total{
+    display: inline;
+}
+#nav .header h1,#nav .total span{
+    font-size: 2rem;
+}
+#nav .header h1,#nav .search{
+    line-height: 4rem;
+}
+#nav .options li,#nav .total{
+    line-height: 2rem;
+}
+#nav,#nav .header{
+    height: 4rem;
+}
+/* nav's Public Style End */
+
+/* nav's Private Style Start */
+#nav{
+    width: 100%;
+    background: deepskyblue;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+#nav .header h1{
+    display: inline;
+    padding: 0 3rem 0 5rem;
+    font-family: "Hebrew";
+}
+#nav .options li{
+    display: block;
+    cursor: pointer;
+    padding: 1.5rem 1rem 0.5rem;
+}
+#nav .search{
+    float: right;
+    padding: 0 5rem;
+}
+#nav .total{
+    padding: 1rem 0 1rem 4rem;
+}
+#nav .total span{
+    color: red;
+}
+/* nav's Private Style End */
+
+
+/* main's Public Style Start */
+#main ul li img,#main ul li p,#main ul li .unit,#main ul li .number,#main ul li .figure{
+    position: absolute;
+}
+#main ul li img,#main ul li p,#main ul li .unit,#main ul li .number{
+    float: left;
+}
+#main ul li .unit span,#main ul li .figure span{
+    color: red;
+    font-size: 2rem;
+}
+#main ul,#main ul li{
+    width: 100%;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    border-radius: 2rem;
+}
+/* main's Public Style End */
+
+/* main's Private Style Start */
+#main{
+    width: 90%;
+    background: skyblue;
+    padding: 2rem 4rem;
+    position: relative;
+    top: 4rem;
+    left: 0;
+}
+#main ul{
+    background: white;
+}
+#main ul li{
+    height: 12rem;
+    border-bottom: 1px solid lightslategray;
+    position: relative;
+}
+#main ul li img{
+    width: 8.5rem;
+    height: 9rem;
+    padding: 0.5rem;
+    background: lightgray;
+    border: 1px solid darkslateblue;
+    left: 3rem;
+    top: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    border-radius: 1rem;
+}
+#main ul li p{
+    width: 10rem;
+    left: 20rem;
+    top: 4rem;
+}
+#main ul li .unit{
+    left: 37rem;
+    top: 4.8rem;
+}
+#main ul li .number{
+    left: 50rem;
+    top: 5rem;
+}
+#main ul li .figure{
+    left: 60rem;
+    top: 4.8rem;
+}
+/* main's Private Style End */
+
+
+/* footer's Public Style Start */
+#footer .author,#footer .technique{
+    height: 1rem;
+    padding: 0.5rem 0 0;
+    line-height: 1rem;
+    color: white;
+}
+/* footer's Public Style End */
+
+/* footer's Private Style Start */
+#footer{
+    width: 100%;
+    height: 4rem;
+    font-size: 14px;
+    font-family: "Hebrew";
+    background: lightgray;
+    position: relative;
+    bottom: -4rem;
+    left: 0;
+}
+#footer .information{
+    text-align: center;
+    padding: 0.5rem 0 0.5rem;
+}
+/* footer's Private Style End */
