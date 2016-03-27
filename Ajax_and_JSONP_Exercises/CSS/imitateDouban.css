@@ -1,0 +1,50 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: Calibri;}
+/* CSS Reset */
+
+#q{
+    width: 300px;
+    height: 22px;
+    padding: 5px;
+    border: 1px solid deepskyblue;
+    font-size: 18px;
+}
+#btn{
+    width: 50px;
+    height: 30px;
+    border: 2px solid lightgray;
+    color: white;
+}
+#msg{
+    font-size: 20px;
+    margin: 10px;
+}
+dl{
+    border-bottom: 1px dotted #000000;
+}
+dt{
+    font-weight: bold;
+    font-size: 14px;
+    margin: 5px 0;
+}
+#pages li{
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 0 5px;
+    display: block;
+    float: left;
+    border: 1px solid lightgray;
+    color: white;
+    background: gray;
+    cursor: pointer;
+    margin-right: 3px;
+}
+#pages li.active{
+    background: orangered;
+}

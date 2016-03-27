@@ -1,0 +1,45 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: Calibri;}
+/* CSS Reset */
+
+#title{
+    font-size: 30px;
+    position: absolute;
+    left: 250px;
+    top: 100px;
+}
+#q{
+    width: 500px;
+    height: 26px;
+    padding: 5px;
+    border: 1px solid grey;
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    top: 200px;
+    margin-left: -250px;
+}
+#ul1{
+    width: 510px;
+    border: 1px solid grey;
+    font-size: 18px;
+    display: none;
+    position: absolute;
+    left: 390px;
+    top: 237px;
+}
+#ul1 li a{
+    width: 500px;
+    height: 26px;
+    padding: 2px 5px;
+    display: block;
+    color: black;
+}
+#ul1 li a:hover{
+    background: deepskyblue;
+}

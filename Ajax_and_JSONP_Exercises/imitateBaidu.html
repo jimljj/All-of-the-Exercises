@@ -4,87 +4,9 @@
     <meta charset="UTF-8">
     <title>imitateBaidu</title>
 
-    <style>
-        li{ list-style: none;}
-        em{ font-style: normal;}
-        a{ text-decoration: none;}
-        table{ border-collapse: collapse;}
-        img{ border: 0; vertical-align: top;}
-        textarea{ resize: none; overflow: auto;}
-        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: Calibri;}
-        /* CSS Reset */
+    <link rel="stylesheet" href="CSS/imitateBaidu.css">
 
-        #title{
-            font-size: 30px;
-            position: absolute;
-            left: 250px;
-            top: 100px;
-        }
-        #q{
-            width: 500px;
-            height: 26px;
-            padding: 5px;
-            border: 1px solid grey;
-            font-size: 20px;
-            position: absolute;
-            left: 50%;
-            top: 200px;
-            margin-left: -250px;
-        }
-        #ul1{
-            width: 510px;
-            border: 1px solid grey;
-            font-size: 18px;
-            display: none;
-            position: absolute;
-            left: 390px;
-            top: 237px;
-        }
-        #ul1 li a{
-            width: 500px;
-            height: 26px;
-            padding: 2px 5px;
-            display: block;
-            color: black;
-        }
-        #ul1 li a:hover{
-            background: deepskyblue;
-        }
-    </style>
-
-    <script>
-        function jimmy(data){
-            var oUl = document.getElementById("ul1");
-            var html = "";
-
-            if( data.s.length ){
-                oUl.style.display = "block";
-                for( var i=0; i<data.s.length; i++){
-                    html += "<li><a href='http://www.baidu.com/s?wd=" + data.s[i] + "'>" + data.s[i] + "</a></li>";
-                }
-                oUl.innerHTML = html;
-            } else {
-                oUl.style.display = "none";
-            }
-        }
-        window.onload = function () {
-            var oQ = document.getElementById("q");
-            var oUl = document.getElementById("ul1");
-
-            oQ.onkeyup = function (e) {
-                if( this.value != "" ) {
-                    if( e.keyCode==13 ){
-                        window.location.href = 'http://www.baidu.com/s?wd=' + this.value;
-                    }
-                    var oScript = document.createElement("script");
-                    oScript.src = "http://suggestion.baidu.com/su?wd=" + this.value + "&cb=jimmy";
-                    document.body.appendChild(oScript);
-                } else {
-                    oUl.style.display = "none";
-                }
-            }
-        }
-    </script>
+    <script type="text/javascript" src="JS/imitateBaidu.js"></script>
 
 </head>
 <body>

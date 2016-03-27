@@ -1,0 +1,30 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 14px; font-style: italic;}
+/*CSS Reset*/
+
+#ul1{
+    width: 1080px;
+    margin: 100px auto 0;
+}
+li{
+    width: 247px;
+    float: left;
+    margin-right: 10px;
+}
+li div{
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+li div img{
+    width: 225px;
+}
+li div p{
+    -ms-word-break: break-all;
+    word-break: break-all;
+}
