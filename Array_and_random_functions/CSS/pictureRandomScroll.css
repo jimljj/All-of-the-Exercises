@@ -1,0 +1,33 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,select,textarea,h1,h2,h3,h4,h5,h6,ul,ol,dl,dd,th,td,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+/* CSS重置 */
+
+.ads{
+    width: 435px;
+    height: 216px;
+    margin: 100px auto;
+    overflow: hidden;
+    border: 5px solid darkgrey;
+    position: relative;
+}
+.ads .adBlockLeft,.ads .adBlockRight{
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+}
+.ads .adBlock{
+    width: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.ads .adBlock img{
+    width: 200px;
+    height: 100px;
+}

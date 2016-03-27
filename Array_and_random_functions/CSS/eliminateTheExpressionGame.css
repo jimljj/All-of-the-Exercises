@@ -1,0 +1,99 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,textarea,select,ul,ol,dl,dd,th,td,h1,h2,h3,h4,h5,h6,p,pre{ margin: 0; padding: 0; font-size: 12px; font-family: "楷体";}
+/* CSS重置 */
+
+body{
+    background: #eff7ef;
+}
+.gameName{
+    width: 300px;
+    height: 35px;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 35px;
+    text-align: center;
+    margin-left: -150px;
+    position: absolute;
+    left: 50%;
+    top: 4%;
+}
+.introduce,.explain{
+    width: 1000px;
+    height: 22px;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    margin-left: -500px;
+    position: absolute;
+    left: 50%;
+}
+.introduce{
+    top: 10%;
+}
+.switch{
+    width: 150px;
+    height: 30px;
+    font-size: 20px;
+    margin-left: -75px;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+}
+.board{
+    width: 120px;
+    height: 60px;
+    border: 1px solid #3b888c;
+    background: lightgreen;
+    position: absolute;
+    left: 69px;
+    top: 25%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.board .get,.board .lose{
+    width: 100px;
+    height: 24px;
+    color: dodgerblue;
+    font-size: 16px;
+    margin-left: -45px;
+    position: absolute;
+    left: 50%;
+}
+.board .get{
+    top: 20%;
+}
+.board .lose{
+    top: 55%;
+}
+.board .get .getScore,.board .lose .loseScore{
+    color: orangered;
+}
+.gameArea{
+    width: 900px;
+    height: 500px;
+    border: 1px solid #3b888c;
+    background: #FFFFFF;
+    margin-left: -450px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+}
+.gameArea img{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -40px;
+}
+.explain{
+    top: 93%;
+}
