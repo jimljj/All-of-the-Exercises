@@ -1,0 +1,32 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 14px; font-family: Cursive;}
+/* CSS重置 */
+
+.wrap{
+    width: 500px;
+    height: 500px;
+    border: 5px solid lightgray;
+    color: darkorange;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;;
+}
+.wrap div{
+    border: 1px solid greenyellow;
+    position: absolute;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;;
+}

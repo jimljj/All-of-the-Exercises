@@ -1,0 +1,51 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,input,textarea,select,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 16px; font-family: "楷体";}
+/* CSS重置 */
+
+.scrollArea{
+    width: 20px;
+    height: 500px;
+    background: lightgray;
+    position: absolute;
+    left: 30%;
+    top: 100px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;;
+}
+.scrollArea .scrollBar{
+    width: 20px;
+    height: 20px;
+    background: darkgray;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.wrap{
+    width: 470px;
+    height: 470px;
+    padding: 10px;
+    border: 5px solid lightgray;
+    overflow: hidden;
+    position: absolute;
+    left: 32%;
+    top: 100px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.wrap .content{
+    width: 470px;
+    position: absolute;
+    left: 10px;
+    top: 0;
+}
