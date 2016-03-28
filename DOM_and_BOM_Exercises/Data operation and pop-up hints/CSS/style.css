@@ -67,5 +67,5 @@ li {list-style:none;}
 }
 #arrow {
 	position: absolute; left: -11px; top: 120px;
-	width: 11px; height: 17px; background: url("arrow.png") no-repeat;
+	width: 11px; height: 17px; background: url("../img/arrow.png") no-repeat;
 }
