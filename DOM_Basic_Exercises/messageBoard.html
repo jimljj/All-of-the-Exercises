@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    
+    <link rel="stylesheet" href="CSS/messageBoard.css">
+
+    <script type="text/javascript" src="JS/messageBoard.js"></script>
+
+</head>
+<body>
+
+<div class="wrap">
+    <img src="img/paperBg.jpg" class="background"/>
+    <textarea class="messageEdit" id="messageEdit" placeholder="请在此处编辑你的留言,点击留言后，会在下面的留言框显示……"></textarea>
+    <input type="button" value="留言" class="confirm" id="confirm"/>
+    <input type="button" value="批量删除" class="delete" id="delete"/>
+    <ul class="messageBoard" id="messageBoard"></ul>
+    <p class="introduce">留言只准留5条。若要批量删除，直接选中要删除的留言，然后点击批量删除，即可。</p>
+</div>
+
+</body>
+</html>
