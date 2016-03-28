@@ -1,0 +1,45 @@
+li{ list-style: none;}
+em{ font-style: normal;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse;}
+img{ border: 0; vertical-align: top;}
+textarea{ resize: none; overflow: auto;}
+body,form,select,input,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 14px; font-family: Calibri;}
+/*CSS Reset*/
+
+.wrap{
+    width: 940px;
+    height: 400px;
+    border: 1px dotted #6aa8c1;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    margin-left: -470px;
+}
+.red,.green,.blue,.yellow,.pink{
+    width: 700px;
+    height: 400px;
+    position: absolute;
+    top: 0;
+}
+.red{
+    background: red;
+    left: 0;
+}
+.green{
+    background: green;
+    left: 60px;
+}
+.blue{
+    background: blue;
+    left: 120px;
+}
+.yellow{
+    background: yellow;
+    left: 180px;
+}
+.pink{
+    background: pink;
+    left: 240px;
+}

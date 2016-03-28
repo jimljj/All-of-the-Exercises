@@ -4,86 +4,10 @@
     <meta charset="UTF-8">
     <title>magnifierEffect</title>
 
-    <style>
-        li{ list-style: none}
-        em{ font-style: normal;}
-        a{ text-decoration: none;}
-        table{ border-collapse: collapse;}
-        img{ border: 0; vertical-align: top;}
-        textarea{ resize: none; overflow: auto;}
-        body,form,input,select,textarea,ul,ol,dl,dd,h1,h2,h3,h4,h5,h6,th,td,p,pre{ margin: 0; padding: 0; font-size: 14px; font-family: Calibri;}
-        /*CSS Reset*/
+    <link rel="stylesheet" href="CSS/magnifierEffect.css">
 
-        .pic{
-            cursor: pointer;
-            position: absolute;
-            left: 10%;
-            top: 10%;
-        }
-        .pic img{
-            width: 200px;
-            height: 200px;
-        }
-        .pic .shade{
-            width: 100px;
-            height: 100px;
-            background: yellow;
-            opacity: 0.3;
-            position: absolute;
-            left: 0;
-            top:0;
-        }
-        .wrap{
-            display: none;
-            width: 375px;
-            height: 375px;
-            overflow: hidden;
-            border: 1px solid #6aa8c1;
-            position: absolute;
-            left: 30%;
-            top: 10%;
-        }
-        .wrap .magnifier{
-            position: absolute;
-        }
-    </style>
-
-    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
-    <script>
-        $(function () {
-            var disX = 0;
-            var disY = 0;
-            var multiple = -750/200;
-
-            $('.pic').on( 'mousemove', function (e) {
-                disX = e.pageX-$(this).offset().left-50;
-                disY = e.pageY-$(this).offset().top-50;
-
-                if( disX<0 ){
-                    disX = 0;
-                } else if( disX>100 ){
-                    disX = 100;
-                }
-
-                if( disY<0 ){
-                    disY = 0;
-                } else if( disY>100 ){
-                    disY = 100;
-                }
-
-                $('.shade').css({ left:disX, top:disY});
-
-                $('.wrap').css( 'display', 'block');
-
-                $('.magnifier').css({ left:multiple*disX, top:multiple*disY});
-
-            }).on( 'mouseout', function () {
-
-                $('.wrap').css( 'display', 'none');
-
-            })
-        })
-    </script>
+    <script type="text/javascript" src="JS/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="JS/magnifierEffect.js"></script>
 
 </head>
 <body>
