@@ -1,0 +1,15 @@
+#main {
+  margin-top: 6em;
+}
+
+#content {
+  margin-top: 3em;
+}
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
+}
