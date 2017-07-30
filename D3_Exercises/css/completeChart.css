@@ -1,0 +1,43 @@
+.wrap{
+	width: 500px;
+  height: 500px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.wrap strong{
+  color: grey;
+  height: 100px;
+  display: block;
+  font-size: 30px;
+  line-height: 100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wrap #chart{
+	padding: 0 50px;
+}
+
+.axis path,
+.axis line{
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	font-family: sans-serif;
+	font-size: 11px;
+}
+
+.my-rect {
+	fill: steelblue;
+}
+
+.my-text {
+	fill: white;
+	text-anchor: middle;
+}
