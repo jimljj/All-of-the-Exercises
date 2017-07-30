@@ -1,3 +1,7 @@
+body{
+	background: lightgrey;
+}
+
 .wrap{
 	width: 500px;
   height: 500px;
@@ -31,13 +35,14 @@
 .axis text {
 	font-family: sans-serif;
 	font-size: 11px;
+	color: grey;
 }
 
 .my-rect {
-	fill: steelblue;
+	/*fill: steelblue;*/
 }
 
 .my-text {
-	fill: white;
+	fill: grey;
 	text-anchor: middle;
 }

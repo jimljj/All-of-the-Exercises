@@ -52,13 +52,29 @@ window.onload = function(){
 			return padding.left + rectPadding/2 + scaleX(++i);
 		})
 		.attr("y", function( d, i){
-			return padding.top + scaleY(d);
+			var min = scaleY.domain()[0];			// 取值域最小的点，设定初始值
+			return padding.top + scaleY(min);
 		})
-		.attr("width", function( d, i){
-			return scaleX.rangeBand() - rectPadding;
+		.attr("height", 0)
+		.attr("fill", "white")
+		.transition().duration(2000).ease("bounce").delay(function( d, i){		// 添加过渡
+			return i*200;
+		})
+		.attr("y", function( d, i){
+			return padding.top + scaleY(d);
 		})
 		.attr("height", function( d, i){
 			return height - padding.top - padding.bottom - scaleY(d);
+		})
+		.attr("width", scaleX.rangeBand() - rectPadding)
+		.attr("fill","steelblue");
+
+	svg.selectAll(".my-rect")
+		.on("mouseover", function( d, i){
+			d3.select(this).transition().duration(500).ease("linear").attr("fill", "orange");
+		})
+		.on("mouseout", function( d, i){
+			d3.select(this).transition().duration(500).ease("circle").attr("fill", "steelblue");
 		});
 
 	// 添加足够多的文字元素
@@ -68,12 +84,18 @@ window.onload = function(){
 			return padding.left + rectPadding/2 + scaleX(++i);
 		})
 		.attr("y", function( d, i){
+			var min = scaleY.domain()[0];			// 取值域最小的点，设定初始值
+			return padding.top + scaleY(min);
+		})
+		.attr("dy",  -400)
+		.transition().duration(2000).ease("bounce").delay(function( d, i){		// 添加过渡
+			return i*200;
+		})
+		.attr("y", function( d, i){
 			return padding.top + scaleY(d);
 		})
-		.attr("dx", function(){		// 设置文字x方向起始位置，正方向朝右
-			return (scaleX.rangeBand() - rectPadding)/2;
-		})
-		.attr("dy", 20)		// 设置文字y方向起始位置，正方向朝下
+		.attr("dx", (scaleX.rangeBand()-rectPadding)/2 )		// 设置文字x方向起始位置，正方向朝右
+		.attr("dy", -5)		// 设置文字y方向起始位置，正方向朝下
 		.text(function(d, i){
 			return d;
 		});
