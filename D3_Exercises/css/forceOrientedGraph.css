@@ -1,0 +1,31 @@
+body{
+	background: lightgrey;
+}
+
+.wrap{
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wrap strong{
+  color: grey;
+  height: 100px;
+  display: block;
+  font-size: 30px;
+  line-height: 100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#chart svg line{
+  stroke: white;      /*添加颜色*/
+  stroke-width: 3;    /*线段粗细*/
+}
+
+#chart svg text{
+  fill: grey;
+}
